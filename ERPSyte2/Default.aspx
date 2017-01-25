@@ -8,6 +8,9 @@
         <asp:HyperLink ID="hlProcNotBuy" runat="server" NavigateUrl="~/ViewOthers/ProcNotBuy.aspx">Информация по процессу незакупаемая номенклатура</asp:HyperLink>
         <br />
         <br />
+        <a href="ViewOthers/ProcNotBuyItems.html">ProcNotBuyItems</a>
+        <br />
+        <br />
         <asp:HyperLink ID="hlQCDViewer" runat="server" NavigateUrl="~/ViewOthers/QCDViewer.aspx">Журнал входного контроля</asp:HyperLink>
         <br />
         <br />
