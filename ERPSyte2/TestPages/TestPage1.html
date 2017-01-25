@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script type="text/javascript">
+        $(function () {
+            var $table = $('table'),
+                size = 10;
+
+            $table.tablesorter({
+                theme: 'blue',
+                widthFixed: true,
+                widgets: ['zebra', 'columns']
+            })
+            .tablesorterPager({
+                container: $(".pager"),
+                size: size,
+                // set to false otherwise it remembers setting from other jsFiddle demos
+                savePages: false,
+                ajaxUrl: "http://www.filltext.com/?callback=?",
+                customAjaxUrl: function (table, url) {
+                    // need to dynamically update page size
+                    // since adding 'rows : size' in ajaxObject.data doesn't
+                    // dynamically update the size
+                    table.config.pager.ajaxObject.data.rows = table.config.pager.size;
+                    return url;
+                },
+                ajaxObject: {
+                    beforeSend: function () {
+                        // show the custom spinner
+                        $.blockUI({
+                            fadeIn: 1,
+                            fadeOut: 1,
+                            css: {
+                                border: 'none',
+                                backgroundColor: 'transparent',
+                                color: '#333366',
+                                left: '40%'
+                            },
+                            overlayCSS: {
+                                backgroundColor: '#FFF'
+                            },
+                            message: '<div class="dots">&nbsp;</div><h4 style="margin-top:30px;">Loading data...</h4>'
+                        });
+                    },
+                    data: {
+                        // rows   : size, // this doesn't work because size can't be updated dynamically
+                        '#': '{index}',
+                        'ID': '{randomNumberLength|3}',
+                        'First': '{firstName}',
+                        'Last': '{lastName}',
+                        'State': '{usState|abbr}',
+                        'Info': '{lorem|3}'
+                    }
+                },
+                ajaxProcessing: function (data) {
+                    if (data) {
+                        var col, row, txt,
+                        // make # column show correct value
+                        index = $table[0].config.pager.page,
+                            headers = ['#', 'ID', 'First', 'Last', 'State', 'Info'],
+                            len = headers.length,
+                            json = {},
+                            rows = '';
+                        size = data.length;
+                        for (row = 0; row < size; row++) {
+                            rows += '<tr>';
+                            for (col = 0; col < len; col++) {
+                                // make # column show correct index
+                                txt = col === 0 ? index * size + row + col + 1 : data[row][headers[col]];
+                                rows += '<td>' + txt + '</td>';
+                            }
+                            rows += '</tr>';
+                        }
+                        json.total = 100; // only allow 100 rows in total
+                        json.filteredRows = 100; // no filtering
+                        json.headers = headers;
+                        json.rows = $(rows);
+
+                        // remove the custom spinner
+                        $.unblockUI();
+
+                        return json;
+                    }
+                },
+                output: '{startRow} to {endRow} of {filteredRows} ({totalRows})'
+            });
+        });
+    </script>
+</head>
+<body>
+    <!--https://github.com/Mottie/tablesorter/issues/686-->
+    <!--http://jsfiddle.net/Mottie/uwZc2/3/-->
+    <!-- pager -->
+    <div class="pager">
+        <img src="http://mottie.github.com/tablesorter/addons/pager/icons/first.png" class="first" />
+        <img src="http://mottie.github.com/tablesorter/addons/pager/icons/prev.png" class="prev" /> <span class="pagedisplay"></span>
+        <!-- this can be any element, including an input -->
+        <img src="http://mottie.github.com/tablesorter/addons/pager/icons/next.png" class="next" />
+        <img src="http://mottie.github.com/tablesorter/addons/pager/icons/last.png" class="last" />
+        <select class="pagesize" title="Select page size">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+        <select class="gotoPage" title="Select page number"></select>
+    </div>
+    <table class="tablesorter">
+        <thead>
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+</html>

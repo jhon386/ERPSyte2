@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AccessDenied.aspx.cs" Inherits="ERPSyte2.AccessDenied" MasterPageFile="~/Site.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AccessDenied.aspx.cs" Inherits="ERPSyte2.AccessDenied" MasterPageFile="~/ViewOthers/Site.Master" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="head" ID="h">
 

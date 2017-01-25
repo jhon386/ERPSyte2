@@ -1,13 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProcessNotBuy.aspx.cs" Inherits="ERPSyte2.ProcessNotBuy" MasterPageFile="~/Site.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProcessNotBuy.aspx.cs" Inherits="ERPSyte2.ViewOthers.ProcessNotBuy" MasterPageFile="~/ViewOthers/Site.Master" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server" ID="HeadContent">
-    <link type="text/css" rel="Stylesheet" href="Content/themes/base/jquery-ui.css" />
-    <script type="text/javascript" src="Scripts/jquery-1.6.4.min.js"></script>
-    <script type="text/javascript" src="Scripts/jquery-ui-1.10.4.min.js"></script>
-    <script type="text/javascript" src="Scripts/jquery.blockUI.min.js"></script>
-    <script type="text/javascript" src="Scripts/DatePickerReady.js"></script>
-    <script type="text/javascript" src="Scripts/d3.min.js"></script>
-    <script type="text/javascript" src="Scripts/QCD_ExportExcel.js"></script>
+    <link type="text/css" rel="Stylesheet" href="../Content/themes/base/jquery-ui.css" />
+    <script type="text/javascript" src="../Scripts/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.blockUI.min.js"></script>
+    <script type="text/javascript" src="../Scripts/DatePickerReady.js"></script>
+    <script type="text/javascript" src="../Scripts/d3.min.js"></script>
+    <script type="text/javascript" src="../Scripts/QCD_ExportExcel.js"></script>
     <script type="text/javascript">
         function showWaitPanel() {
             $.blockUI({ message: '<h1><img src="Image/49.gif" /> Just a moment...</h1>' });

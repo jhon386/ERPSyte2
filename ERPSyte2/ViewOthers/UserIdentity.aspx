@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserIdentity.aspx.cs" Inherits="ERPSyte2.WebIdentity" MasterPageFile="~/Site.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserIdentity.aspx.cs" Inherits="ERPSyte2.ViewOthers.WebIdentity" MasterPageFile="~/ViewOthers/Site.Master" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server" ID="HeadContent">
 
@@ -8,6 +8,6 @@
         user:&nbsp;
         <asp:Label ID="tbUser" runat="server" />
         <br />
-        <a href="Internal/Missions.aspx">Missions</a>
+        <a href="../Internal/Mission.aspx">Missions</a>
     </p>
 </asp:Content>

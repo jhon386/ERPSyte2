@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Web.UI;
 
-namespace ERPSyte2
+namespace ERPSyte2.ViewOthers
 {
     public partial class ProcessNotBuy : System.Web.UI.Page
     {

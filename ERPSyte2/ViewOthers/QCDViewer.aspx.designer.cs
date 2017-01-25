@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ERPSyte2 {
+namespace ERPSyte2.ViewOthers {
     
     
     public partial class QCDViewer {

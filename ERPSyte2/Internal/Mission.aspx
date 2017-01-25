@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Mission.aspx.cs" Inherits="ERPSyte2.Internal.Mission" MasterPageFile="~/Site.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Mission.aspx.cs" Inherits="ERPSyte2.Internal.Mission" MasterPageFile="~/ViewOthers/Site.Master" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="head" ID="HeadContent">
 

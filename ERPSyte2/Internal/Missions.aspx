@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Missions.aspx.cs" Inherits="ERPSyte2.Internal.Missions" MasterPageFile="~/Site.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Missions.aspx.cs" Inherits="ERPSyte2.Internal.Missions" MasterPageFile="~/ViewOthers/Site.Master" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server" ID="HeadContent">
     <link type="text/css" rel="Stylesheet" href="../Content/themes/base/jquery-ui.css" />

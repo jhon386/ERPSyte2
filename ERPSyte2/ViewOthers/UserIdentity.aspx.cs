@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web;
 
-namespace ERPSyte2
+namespace ERPSyte2.ViewOthers
 {
     public partial class WebIdentity : System.Web.UI.Page
     {

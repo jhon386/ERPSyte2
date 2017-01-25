@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ERPSyte2.Site" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="~/ViewOthers/Site.Master.cs" Inherits="ERPSyte2.Site" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -6,10 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>ERP-Syte - НИПК Электрон</title>
-    <link rel="Stylesheet" href="Content/DataGrid.css" />
-    <link rel="Stylesheet" href="Content/Site.css" />
-    <link rel="icon" href="Image/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="Image/favicon.ico" type="image/x-icon" />
+    <link rel="Stylesheet" href="../Content/DataGrid.css" />
+    <link rel="Stylesheet" href="../Content/Site.css" />
+    <link rel="icon" href="../Image/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../Image/favicon.ico" type="image/x-icon" />
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>

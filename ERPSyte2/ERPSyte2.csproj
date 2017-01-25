@@ -139,20 +139,26 @@
     <Content Include="Global.asax" />
     <Content Include="Image\49.gif" />
     <Content Include="Image\8fef0805113e56aa6a7d44e3289a680e.gif" />
+    <Content Include="Image\busy.gif" />
     <Content Include="Image\favicon.ico" />
     <Content Include="Image\Theseven.gif" />
     <Content Include="Internal\Mission.aspx" />
     <Content Include="Internal\Missions.aspx" />
     <Content Include="Internal\ServerVariables.aspx" />
-    <Content Include="LICENSE.txt" />
-    <Content Include="ProcessNotBuy.aspx" />
-    <Content Include="QCDViewer.aspx" />
+    <Content Include="Scripts\zKdDateFormatUnit.js" />
+    <Content Include="TestPages\HTML5CanvasGoogleBouncingBalls.html" />
+    <Content Include="TestPages\TestPage1.html" />
+    <Content Include="ViewOthers\ProcessNotBuy.aspx" />
+    <Content Include="ViewOthers\ProcNotBuy.aspx" />
+    <Content Include="ViewOthers\QCDViewer.aspx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.blockUI.min.js" />
-    <Content Include="TestAjax.aspx" />
-    <Content Include="TestAjaxWOAspNet.html" />
-    <Content Include="UserIdentity.aspx" />
+    <Content Include="Scripts\json2.js" />
+    <Content Include="Services\WCFService.svc" />
+    <Content Include="TestPages\TestAjax.aspx" />
+    <Content Include="TestPages\TestAjaxWOAspNet.html" />
+    <Content Include="ViewOthers\UserIdentity.aspx" />
     <None Include="Properties\PublishProfiles\erp-syte-test.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\d3.js" />
@@ -163,7 +169,6 @@
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\QCD_ExportExcel.js" />
-    <Content Include="WCFAjaxService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -215,55 +220,68 @@
     </Compile>
     <Compile Include="Models\msMission.cs" />
     <Compile Include="Models\msMissionItem.cs" />
-    <Compile Include="ProcessNotBuy.aspx.cs">
+    <Compile Include="Services\WCFErrorHandle.cs" />
+    <Compile Include="ViewOthers\ProcessNotBuy.aspx.cs">
       <DependentUpon>ProcessNotBuy.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ProcessNotBuy.aspx.designer.cs">
+    <Compile Include="ViewOthers\ProcessNotBuy.aspx.designer.cs">
       <DependentUpon>ProcessNotBuy.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QCDViewer.aspx.cs">
+    <Compile Include="ViewOthers\ProcNotBuy.aspx.cs">
+      <DependentUpon>ProcNotBuy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewOthers\ProcNotBuy.aspx.designer.cs">
+      <DependentUpon>ProcNotBuy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewOthers\QCDViewer.aspx.cs">
       <DependentUpon>QCDViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="QCDViewer.aspx.designer.cs">
+    <Compile Include="ViewOthers\QCDViewer.aspx.designer.cs">
       <DependentUpon>QCDViewer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Site.Master.cs">
+    <Compile Include="Services\WCFService.svc.cs">
+      <DependentUpon>WCFService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="ViewOthers\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Site.Master.designer.cs">
+    <Compile Include="ViewOthers\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="TestAjax.aspx.cs">
+    <Compile Include="TestPages\TestAjax.aspx.cs">
       <DependentUpon>TestAjax.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TestAjax.aspx.designer.cs">
+    <Compile Include="TestPages\TestAjax.aspx.designer.cs">
       <DependentUpon>TestAjax.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UserIdentity.aspx.cs">
+    <Compile Include="ViewOthers\UserIdentity.aspx.cs">
       <DependentUpon>UserIdentity.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserIdentity.aspx.designer.cs">
+    <Compile Include="ViewOthers\UserIdentity.aspx.designer.cs">
       <DependentUpon>UserIdentity.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WCFAjaxService.svc.cs">
-      <DependentUpon>WCFAjaxService.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Start\" />
     <Folder Include="aspnet_client\system_web\1_1_4322\" />
     <Folder Include="aspnet_client\system_web\2_0_50727\" />
     <Folder Include="aspnet_client\system_web\4_0_30319\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\Home\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Site.Master" />
+    <Content Include="ViewOthers\Site.Master" />
     <None Include="Properties\PublishProfiles\ERP-Syte.pubxml" />
+    <Content Include="Scripts\json2.cdnjs.com.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

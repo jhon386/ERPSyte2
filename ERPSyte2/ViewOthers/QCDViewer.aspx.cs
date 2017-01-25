@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
 
-namespace ERPSyte2
+namespace ERPSyte2.ViewOthers
 {
     public partial class QCDViewer : System.Web.UI.Page
     {

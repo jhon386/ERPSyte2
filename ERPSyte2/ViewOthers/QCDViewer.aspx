@@ -1,12 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="QCDViewer.aspx.cs" Inherits="ERPSyte2.QCDViewer" MasterPageFile="~/Site.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="QCDViewer.aspx.cs" Inherits="ERPSyte2.ViewOthers.QCDViewer" MasterPageFile="~/ViewOthers/Site.Master" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server" ID="HeadContent">
-    <link type="text/css" rel="Stylesheet" href="Content/themes/base/jquery-ui.css" />
-    <script type="text/javascript" src="Scripts/jquery-1.6.4.min.js"></script>
-    <script type="text/javascript" src="Scripts/jquery-ui-1.10.4.min.js"></script>
-    <script type="text/javascript" src="Scripts/DatePickerReady.js"></script>
-    <script type="text/javascript" src="Scripts/d3.min.js"></script>
-    <script type="text/javascript" src="Scripts/QCD_ExportExcel.js"></script>
+    <link type="text/css" rel="Stylesheet" href="../Content/themes/base/jquery-ui.css" />
+    <script type="text/javascript" src="../Scripts/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/DatePickerReady.js"></script>
+    <script type="text/javascript" src="../Scripts/d3.min.js"></script>
+    <script type="text/javascript" src="../Scripts/QCD_ExportExcel.js"></script>
     <script type="text/javascript">
         function GetParamAndExport(){
             var cDateRecordFrom = "";
