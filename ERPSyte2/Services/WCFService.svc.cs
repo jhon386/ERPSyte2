@@ -234,6 +234,10 @@ namespace ERPSyte2.Services
             return processNotBuyRowList;
         }
 
+        public ServiceUserData getServiceUserData()
+        {
+            return new ServiceUserData();
+        }
     }
 
     [ServiceContract]
@@ -274,6 +278,9 @@ namespace ERPSyte2.Services
         [FaultContract(typeof(WCFServerError))]
         List<ProcessNotBuyRow> getProcessNotBuyRows(List<string> aData);
 
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        ServiceUserData getServiceUserData();
     }
 
     [ServiceContract(Namespace = "")]
@@ -358,6 +365,57 @@ namespace ERPSyte2.Services
     }
 
 
+
+    [DataContract]
+    public class ServiceUserData
+    {
+        [DataMember]
+        public string Login { get; set; }
+        [DataMember]
+        public int UID { get; set; }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public string sName { get; set; }
+
+        private void GetDBUserData()
+        {
+            string conn = ConfigurationManager.ConnectionStrings["ERPcs"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conn))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("zKdcm_GetUser", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@login", SqlDbType.NVarChar, 30).Value = Login;
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            UID = Convert.ToInt32(dr["UID"]); ;
+                            Name = dr["UserDesc"].ToString(); 
+                            sName = dr["UserDesc"].ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        public ServiceUserData()
+        {
+            Login = "n/a";
+            UID = 0;
+            Name = "n/a";
+            sName = "n/a";
+
+            if (!ServiceSecurityContext.Current.IsAnonymous)
+            {
+                Login = ServiceSecurityContext.Current.PrimaryIdentity.Name.Split( new char [] {'\\'} )[1];
+                GetDBUserData();
+            }
+        }
+    }
 
     [DataContract]
     public class HBMessage
@@ -450,6 +508,7 @@ namespace ERPSyte2.Services
         public DateTime? DateCode004To { get; set; }
 
     }
+
 /*
     [DataContract]
     public class FaultExecStoredProc

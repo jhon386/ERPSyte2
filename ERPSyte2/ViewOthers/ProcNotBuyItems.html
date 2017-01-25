@@ -2,19 +2,228 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Информация по процессу незакупаемая номенклатура </title>
+    <title>Информация по процессу незакупаемая номенклатура</title>
+    <link rel="shortcut icon" href="../Image/favicon.ico" type="image/x-icon" />
+    <link href="../Content/themes/base/jquery-ui.css" rel="stylesheet" />
     <link href="../Content/DataGrid.css" rel="stylesheet" />
     <link href="../Content/Site.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="../Image/favicon.ico" type="image/x-icon" />
+    <script src="../Scripts/jquery-1.6.4.min.js"></script>
+    <script src="../Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="../Scripts/jquery.blockUI.min.js"></script>
+    <script src="../Scripts/DatePickerReady.js"></script>
+    <script src="../Scripts/zKdDateFormatUnit.js"></script>
+    <script src="../Scripts/zKdPageFooterUnit.js"></script>
 </head>
 <body>
     <form id="MainForm">
         <div id="body">
+            <div id="tabs" style="width: auto; margin-left: 0px;">
+                <h3 style="text-align:center; margin-bottom:10px;">
+                    Информация по процессу незакупаемая номенклатура
+                </h3>
+                <ul>
+                    <li><a href="#tabs-1">Данные</a></li>
+                    <li><a href="#tabs-2">Фильтр</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <asp:GridView ID="GridViewData" runat="server" AutoGenerateColumns="False" BorderStyle="Solid" BorderWidth="1px" CssClass="cgrid" PageSize="50" EnableViewState="False" OnRowCommand="GridViewData_RowCommand">
+                        <Columns>
+                            <asp:BoundField HeaderText="Код ERP" DataField="Item" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolnw" />
+                            <asp:BoundField HeaderText="Название" DataField="Description" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcol" />
+                            <asp:BoundField HeaderText="Дата присвоения группы 004" DataField="DateCode004" DataFormatString="{0:dd.MM.yyyy}" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct" />
+                            <asp:TemplateField HeaderText="Процесс «Регистрация аналога» запущен" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label1" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsAnalogRegistered").ToString()=="1") ? "Да": "" %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Аналог утвержден" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label2" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsAnalogApproved").ToString()=="1") ? "Да": "" %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Введение эквивалентных замен" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label3" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsEquivalentPush").ToString()=="1") ? "Да": "" %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Введение эквивалентных замен" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <%--<asp:Label ID="Label4" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsEquivalentPush").ToString()=="1") ? "Да ": "" %>'></asp:Label>--%>
+                                    <asp:Button ID="EquivalentPushButton" runat="server"
+                                                BackColor='<%# GetBackColor(Container.DataItem, "IsEquivalentPush") %>'
+                                                CommandName="IsEquivalentPush"
+                                                CommandArgument='<%# Eval("Item") + "," + Eval("IsEquivalentPush") %>'
+                                                Text='<%# GetStatusText(Container.DataItem, "IsEquivalentPush") %>'
+                                                ToolTip='<%# GetToolTipText(Container.DataItem, "IsEquivalentPush") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ИИ проведены" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label5" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsVersionAdvance").ToString()=="1") ? "Да": "" %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ИИ проведены" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <%--<asp:Label ID="Label6" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsVersionAdvance").ToString()=="1") ? "Да ": "" %>'></asp:Label>--%>
+                                    <asp:Button ID="VersionAdvanceButton" runat="server"
+                                                BackColor='<%# GetBackColor(Container.DataItem, "IsVersionAdvance") %>'
+                                                CommandName="IsVersionAdvance"
+                                                CommandArgument='<%# Eval("Item") + "," + Eval("IsVersionAdvance") %>'
+                                                Text='<%# GetStatusText(Container.DataItem, "IsVersionAdvance") %>'
+                                                ToolTip='<%# GetToolTipText(Container.DataItem, "IsVersionAdvance") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Применяемость закрыта" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label7" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsApplyClosed").ToString()=="1") ? "Да": "" %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Срок опережения 999" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label8" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsLeadTime999").ToString()=="1") ? "Да": "" %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+                <div id="tabs-2">
+                    <table style="background-color: ButtonFace;">
+                        <tr>
+                            <td>Код ERP</td>
+                            <td colspan="4">
+                                <input type="text" id="Item" style="width: 100%;">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Название</td>
+                            <td colspan="4">
+                                <input type="text" id="Description" style="width: 100%;">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Дата присвоения группы 004</td>
+                            <td>с</td>
+                            <td>
+                                <input type="text" id="DateCode004From" class="datefield">
+                            </td>
+                            <td>по</td>
+                            <td>
+                                <input type="text" id="DateCode004To" class="datefield">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Процесс «Регистрация аналога» запущен</td>
+                            <td colspan="4">
+                                <select id="IsAnalogRegistered" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Аналог утвержден</td>
+                            <td colspan="4">
+                                <select id="IsAnalogApproved" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Введение эквивалентных замен</td>
+                            <td colspan="4">
+                                <select id="IsEquivalentPush" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>ИИ проведены</td>
+                            <td colspan="4">
+                                <select id="IsVersionAdvance" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Применяемость закрыта</td>
+                            <td colspan="4">
+                                <select id="IsApplyClosed" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Срок опережения 999</td>
+                            <td colspan="4">
+                                <select id="IsLeadTime999" style="width: 100%;">
+                                    <option value="все">все</option>
+                                    <option selected="selected" value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="5" class="tdcntr" style="padding-top: 20px; padding-bottom: 30px;">
+                                <input type="button" id="buttonApplyFilter" onclick="return ajaxApplyFilter();" value="Применить" />
+                            </td>
+                        </tr>
+
+                        <tr style="border-style: solid; border-width: 1px; border-color: #666666;">
+                            <td colspan="5" class="tdcntr" style="padding-top: 5px; padding-bottom: 10px; background-color: #FFFFDB;">
+                                <h3 style="color: #666666;">Совет:</h3>
+                                <strong style="color: #666666">
+                                    Применяйте * для нечеткого поиска по обозначению и/или наименованию.
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr style="border-style: solid; border-width: 1px; border-color: #666666;">
+                            <td colspan="5" class="tdcntr" style="padding-top: 5px; padding-bottom: 10px; background-color: #FFFFDB;">
+                                <h3 style="color: #FF6666;">Внимание!</h3>
+                                <strong style="color: #666666">
+                                    В связи с большим временем обработки запроса,
+                                    <br />
+                                    всегда старайтесь максимально ограничить получаемую выборку,
+                                    <br />
+                                    применяя все возможные доступные фильтры.
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <script type="text/javascript">
+        $("#tabs").tabs({ cookie: { expires: 1 } });
+
+        $("#ApplyFilter").button();
+            </script>
+
         </div>
         <div class="content-wrapper">
             <div class="float-left">
                 <p>
-                    Copyright &copy; 2014-2015 НИПК Электрон. All rights reserved. (<div ID="ftUserName"></div>)
+                    Copyright &copy; 2014-<span id="ftCurrYear">2015</span> НИПК Электрон. All rights reserved. (<span id="ftUserData">0: n/a</span>)
                 </p>
             </div>
         </div>

@@ -146,6 +146,7 @@
     <Content Include="Internal\Missions.aspx" />
     <Content Include="Internal\ServerVariables.aspx" />
     <Content Include="Scripts\zKdDateFormatUnit.js" />
+    <Content Include="Scripts\zKdPageFooterUnit.js" />
     <Content Include="TestPages\HTML5CanvasGoogleBouncingBalls.html" />
     <Content Include="TestPages\TestPage1.html" />
     <Content Include="ViewOthers\ProcessNotBuy.aspx" />
