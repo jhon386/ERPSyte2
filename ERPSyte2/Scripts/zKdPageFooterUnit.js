@@ -3,6 +3,7 @@
 
     document.addEventListener("DOMContentLoaded", loadCurrYear);
     document.addEventListener("DOMContentLoaded", loadUserData);
+    document.addEventListener("DOMContentLoaded", initPage);
 
     function loadCurrYear() {
         var cCurrYear = document.getElementById("ftCurrYear");
@@ -16,6 +17,12 @@
             cUserData.innerHTML = "0: n/a";
             getUserData();
         }
+    }
+
+    function initPage() {
+        $("#tabs").tabs({ cookie: { expires: 1 } });
+        $("#tabs").tabs("option", "active", 1);
+        //$("#ApplyFilter").button();
     }
 
     function getUserData() {
@@ -37,18 +44,31 @@
         try {
 
             var cUserData = document.getElementById("ftUserData");
-            if (cUserData) {
-                var vUID ="", vName = "";
+            var cUserDataLogin = document.getElementById("ftUserDataLogin");
+            var cUserDataUID = document.getElementById("ftUserDataUID");
+            var cUserDataName = document.getElementById("ftUserDataName");
+            var cUserDatasName = document.getElementById("ftUserDatasName");
+
+            if (cUserData && cUserDataLogin && cUserDataUID && cUserDataName && cUserDatasName) {
+                var vUID = "", vName = "", vsName = "", vLogin = 0;
 
                 $.each(data, function (k, v) {
                     if (k === "UID") {
                         vUID = v;
                     } else if (k === "Name") {
                         vName = v;
+                    } else if (k === "sName") {
+                        vsName = v;
+                    } else if (k === "Login") {
+                        vLogin = v;
                     }
                 });
 
                 cUserData.innerHTML = vUID + ": " + vName;
+                cUserDataLogin.innerHTML = vLogin;
+                cUserDataUID.innerHTML = vUID;
+                cUserDataName.innerHTML = vName;
+                cUserDatasName.innerHTML = vsName;
             }
 
         } catch (e) {

@@ -13,6 +13,7 @@
     <script src="../Scripts/DatePickerReady.js"></script>
     <script src="../Scripts/zKdDateFormatUnit.js"></script>
     <script src="../Scripts/zKdPageFooterUnit.js"></script>
+    <script src="../Scripts/zKdProcNotBuyUnit.js"></script>
 </head>
 <body>
     <form id="MainForm">
@@ -26,65 +27,39 @@
                     <li><a href="#tabs-2">Фильтр</a></li>
                 </ul>
                 <div id="tabs-1">
-                    <asp:GridView ID="GridViewData" runat="server" AutoGenerateColumns="False" BorderStyle="Solid" BorderWidth="1px" CssClass="cgrid" PageSize="50" EnableViewState="False" OnRowCommand="GridViewData_RowCommand">
-                        <Columns>
-                            <asp:BoundField HeaderText="Код ERP" DataField="Item" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolnw" />
-                            <asp:BoundField HeaderText="Название" DataField="Description" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcol" />
-                            <asp:BoundField HeaderText="Дата присвоения группы 004" DataField="DateCode004" DataFormatString="{0:dd.MM.yyyy}" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct" />
-                            <asp:TemplateField HeaderText="Процесс «Регистрация аналога» запущен" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label1" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsAnalogRegistered").ToString()=="1") ? "Да": "" %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Аналог утвержден" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label2" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsAnalogApproved").ToString()=="1") ? "Да": "" %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Введение эквивалентных замен" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label3" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsEquivalentPush").ToString()=="1") ? "Да": "" %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Введение эквивалентных замен" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <%--<asp:Label ID="Label4" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsEquivalentPush").ToString()=="1") ? "Да ": "" %>'></asp:Label>--%>
-                                    <asp:Button ID="EquivalentPushButton" runat="server"
-                                                BackColor='<%# GetBackColor(Container.DataItem, "IsEquivalentPush") %>'
-                                                CommandName="IsEquivalentPush"
-                                                CommandArgument='<%# Eval("Item") + "," + Eval("IsEquivalentPush") %>'
-                                                Text='<%# GetStatusText(Container.DataItem, "IsEquivalentPush") %>'
-                                                ToolTip='<%# GetToolTipText(Container.DataItem, "IsEquivalentPush") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ИИ проведены" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label5" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsVersionAdvance").ToString()=="1") ? "Да": "" %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ИИ проведены" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <%--<asp:Label ID="Label6" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsVersionAdvance").ToString()=="1") ? "Да ": "" %>'></asp:Label>--%>
-                                    <asp:Button ID="VersionAdvanceButton" runat="server"
-                                                BackColor='<%# GetBackColor(Container.DataItem, "IsVersionAdvance") %>'
-                                                CommandName="IsVersionAdvance"
-                                                CommandArgument='<%# Eval("Item") + "," + Eval("IsVersionAdvance") %>'
-                                                Text='<%# GetStatusText(Container.DataItem, "IsVersionAdvance") %>'
-                                                ToolTip='<%# GetToolTipText(Container.DataItem, "IsVersionAdvance") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Применяемость закрыта" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label7" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsApplyClosed").ToString()=="1") ? "Да": "" %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Срок опережения 999" HeaderStyle-CssClass="hdcol" ItemStyle-CssClass="itcolct">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label8" runat="server" Text='<%# (DataBinder.Eval(Container.DataItem, "IsLeadTime999").ToString()=="1") ? "Да": "" %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
+                    <table id="GridViewData" >
+                        <thead class="hdhead">
+                            <tr class="hdrow">
+                                <th class="hdcol">
+                                    Код ERP
+                                </th>
+                                <th class="hdcol">
+                                    Название
+                                </th>
+                                <th class="hdcol">
+                                    Дата присвоения группы 004
+                                </th>
+                                <th class="hdcol">
+                                    Процесс «Регистрация аналога» запущен
+                                </th>
+                                <th class="hdcol">
+                                    Аналог утвержден
+                                </th>
+                                <th class="hdcol">
+                                    Введение эквивалентных замен
+                                </th>
+                                <th class="hdcol">
+                                    ИИ проведены
+                                </th>
+                                <th class="hdcol">
+                                    Применяемость закрыта
+                                </th>
+                                <th class="hdcol">
+                                    Срок опережения 999
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
                 <div id="tabs-2">
                     <table style="background-color: ButtonFace;">
@@ -183,7 +158,7 @@
 
                         <tr>
                             <td colspan="5" class="tdcntr" style="padding-top: 20px; padding-bottom: 30px;">
-                                <input type="button" id="buttonApplyFilter" onclick="return ajaxApplyFilter();" value="Применить" />
+                                <input type="button" id="bApplyFilter" value="Применить" />
                             </td>
                         </tr>
 
@@ -196,7 +171,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>&nbsp;</td>
+                            <td colspan="5">&nbsp;</td>
                         </tr>
                         <tr style="border-style: solid; border-width: 1px; border-color: #666666;">
                             <td colspan="5" class="tdcntr" style="padding-top: 5px; padding-bottom: 10px; background-color: #FFFFDB;">
@@ -213,12 +188,12 @@
                     </table>
                 </div>
             </div>
-            <script type="text/javascript">
-        $("#tabs").tabs({ cookie: { expires: 1 } });
-
-        $("#ApplyFilter").button();
-            </script>
-
+            <div>
+                <input type="hidden" id="ftUserDataLogin" />
+                <input type="hidden" id="ftUserDataUID" />
+                <input type="hidden" id="ftUserDataName" />
+                <input type="hidden" id="ftUserDatasName" />
+            </div>
         </div>
         <div class="content-wrapper">
             <div class="float-left">
