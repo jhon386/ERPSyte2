@@ -394,8 +394,8 @@ namespace ERPSyte2.Services
                         while (dr.Read())
                         {
                             UID = Convert.ToInt32(dr["UID"]); ;
-                            Name = dr["UserDesc"].ToString(); 
-                            sName = dr["UserDesc"].ToString();
+                            Name = dr["Name"].ToString(); 
+                            sName = dr["sName"].ToString();
                         }
                     }
                 }

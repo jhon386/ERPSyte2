@@ -6,10 +6,10 @@
     function addButtonEvent() {
         var bApplyFilter = document.getElementById("bApplyFilter");
         if (bApplyFilter)
-            bApplyFilter.addEventListener("click", ajaxApplyFilter);
+            bApplyFilter.addEventListener("click", doApplyFilter);
     }
 
-    function ajaxApplyFilter() {
+    function doApplyFilter(event) {
         try {
             var cItem = document.getElementById('Item');
             var cDescription = document.getElementById('Description');
@@ -65,31 +65,32 @@
                     });
                 },
                 complete: function () { $.unblockUI(); },
-                success: returnData,
+                success: returnFilterData,
                 error: returnError
             });
 
+            event.preventDefault ? event.preventDefault() : (event.returnValue = false); //убрать реакцию браузера на событие W3C / IE 
             return false;
         } catch (e) {
             alert(' Произошла ошибка: ' + e.name + ' ' + e.message);
         }
     }
 
-    function emptyTable() {
+    function removeDataRow() {
         $("[id*=GridViewData] tr").not($("[id*=GridViewData] tr.hdrow")).remove();
     }
 
-    function returnData(data) {
+    function returnFilterData(data) {
         try {
-            emptyTable();
+            removeDataRow();
 
             if (data.length > 0) {
 
-                var vItem, vDescription, vDateCode004,
-                vIsAnalogRegistered, vIsAnalogApproved, vIsEquivalentPush, vIsVersionAdvance, vIsApplyClosed, vIsLeadTime999,
-                vAccessRight, vEquivalentPush_Grant, vVersionAdvance_Grant, vString;
+                var vItem, vDescription, vDateCode004, vIsAnalogRegistered, vIsAnalogApproved,
+                    vIsEquivalentPush, vIsVersionAdvance, vIsApplyClosed, vIsLeadTime999,
+                    vAccessRight, vEquivalentPush_Grant, vVersionAdvance_Grant, vString;
 
-                $.each(data, function (k, v) {
+                $.each(data, function (kRow, vRow) {
 
                     vItem = "&nbsp;";
                     vDescription = "&nbsp;";
@@ -105,29 +106,28 @@
                     vVersionAdvance_Grant = false;
                     vString = "";
 
-                    $.each(this, function (k1, v1) {
-                        if (k1 === "Item") {
-                            vItem = v1;
-                        } else if (k1 === "Description") {
-                            vDescription = v1;
-                        } else if (k1 === "DateCode004" && v1 !== null && v1 != "") {
-                            vDateCode004 = zKdDateFormat(new Date(parseInt(v1.substr(6))));
-                        } else if (k1 === "IsAnalogRegistered") {
-                            vIsAnalogRegistered = (v1 === 1) ? "Да" : "&nbsp;";
-                        } else if (k1 === "IsAnalogApproved") {
-                            vIsAnalogApproved = (v1 === 1) ? "Да" : "&nbsp;";
-                        } else if (k1 === "IsEquivalentPush") {
-                            vIsEquivalentPush = (v1 === 1) ? "Да" : "&nbsp;";
-                        } else if (k1 === "IsVersionAdvance") {
-                            vIsVersionAdvance = (v1 === 1) ? "Да" : "&nbsp;";
-                        } else if (k1 === "IsApplyClosed") {
-                            vIsApplyClosed = (v1 === 1) ? "Да" : "&nbsp;";
-                        } else if (k1 === "IsLeadTime999") {
-                            vIsLeadTime999 = (v1 === 1) ? "Да" : "&nbsp;";
-                        } else if (k1 === "AccessRight") {
-                            vAccessRight = v1;
+                    $.each(this, function (kField, vField) {
+                        if (kField === "Item") {
+                            vItem = vField;
+                        } else if (kField === "Description") {
+                            vDescription = vField;
+                        } else if (kField === "DateCode004" && vField !== null && vField != "") {
+                            vDateCode004 = zKdDateFormat(new Date(parseInt(vField.substr(6))));
+                        } else if (kField === "IsAnalogRegistered") {
+                            vIsAnalogRegistered = (vField === 1) ? "Да" : "&nbsp;";
+                        } else if (kField === "IsAnalogApproved") {
+                            vIsAnalogApproved = (vField === 1) ? "Да" : "&nbsp;";
+                        } else if (kField === "IsEquivalentPush") {
+                            vIsEquivalentPush = vField;
+                        } else if (kField === "IsVersionAdvance") {
+                            vIsVersionAdvance = vField;
+                        } else if (kField === "IsApplyClosed") {
+                            vIsApplyClosed = (vField === 1) ? "Да" : "&nbsp;";
+                        } else if (kField === "IsLeadTime999") {
+                            vIsLeadTime999 = (vField === 1) ? "Да" : "&nbsp;";
+                        } else if (kField === "AccessRight") {
+                            vAccessRight = vField;
                         }
-
                     });
 
                     vEquivalentPush_Grant = (vAccessRight & 32) == 32; //ProcessNotBuy. Начальник КБ (или лицо его заменяющее). dbo.zKd_UserRight
@@ -139,13 +139,19 @@
                     vString += "<td class=itcolct>" + vIsAnalogRegistered + "</td>";
                     vString += "<td class=itcolct>" + vIsAnalogApproved + "</td>";
                     if (vEquivalentPush_Grant) {
-                        vString += "<td style='color:red;'>" + vIsEquivalentPush + "</td>";
+                        vString += "<td class=itcolct><a href='#' onclick='return testFunction(\"EquivalentPush\",\"" + vItem + "\"," + vIsEquivalentPush + ");' " +
+                            "title='" + (vIsEquivalentPush === 1 ? "Нажмите, чтобы снять метку" : "Нажмите, чтобы установить метку") + "' " +
+                            "class='" + (vIsEquivalentPush === 1 ? "aButton1" : "aButton0") + "'>" +
+                            (vIsEquivalentPush === 1 ? "Да" : "Нет") + "</a></td>";
                     } else
-                        vString += "<td class=itcolct>" + vIsEquivalentPush + "</td>";
+                        vString += "<td class=itcolct>" + (vIsEquivalentPush === 1 ? "Да" : "&nbsp;") + "</td>";
                     if (vVersionAdvance_Grant) {
-                        vString += "<td style='color:red;>" + vIsVersionAdvance + "</td>";
+                        vString += "<td class=itcolct><a href='#' onclick='return testFunction(\"VersionAdvance\",\"" + vItem + "\"," + vIsVersionAdvance + ");' " +
+                            "title='" + (vIsVersionAdvance === 1 ? "Нажмите, чтобы снять метку" : "Нажмите, чтобы установить метку") + "' " +
+                            "class='" + (vIsVersionAdvance === 1 ? "aButton1" : "aButton0") + "'>" +
+                            (vIsVersionAdvance === 1 ? "Да" : "Нет") + "</a></td>";
                     } else
-                        vString += "<td class=itcolct>" + vIsVersionAdvance + "</td>";
+                        vString += "<td class=itcolct>" + (vIsVersionAdvance === 1 ? "Да" : "&nbsp;") + "</td>";
                     vString += "<td class=itcolct>" + vIsApplyClosed + "</td>";
                     vString += "<td class=itcolct>" + vIsLeadTime999 + "</td>";
 
@@ -154,7 +160,7 @@
                 });
             }
             else {
-                $("[id*=GridViewData]").append("<tr><td colspan=9 class=itcolct>Нет данных удовлетворяющих условию</td></tr>");
+                $("[id*=GridViewData]").append("<tr><td colspan=9 class=itcolct>Нет данных, удовлетворяющих условию фильтрации.</td></tr>");
             }
 
             $("#tabs").tabs("option", "active", 0);
@@ -208,3 +214,9 @@
     }
 
 })(window);
+
+function testFunction(action, item, value) {
+    alert("action: " + action + " item: " + item + " value: " + value);
+    return false;
+}
+
