@@ -231,7 +231,93 @@ namespace ERPSyte2.Services
                     }
                 }
             }
+
             return processNotBuyRowList;
+        }
+
+        public ExecResult setApplyChoice(List<string> aData)
+        {
+            ExecResult execResult = new ExecResult();
+            ResultExecStoredProc result = new ResultExecStoredProc();
+            string cProc = "";
+            string cItem = "";
+            int cValue = 0;
+            string cLogin = "";
+            string srvLogin = ServiceSecurityContext.Current.PrimaryIdentity.Name.Split(new char[] { '\\' })[1];
+            string srvProc = "";
+
+            if (aData != null)
+            {
+                if (aData.Count > 0 && aData[0] != null)
+                    cProc = aData[0];
+                if (aData.Count > 1 && aData[1] != null)
+                    cItem = aData[1];
+                if (aData.Count > 2 && aData[2] != null)
+                    cValue = Convert.ToInt32(aData[2]);
+                if (aData.Count > 3 && aData[3] != null)
+                    cLogin = aData[3];
+            }
+
+            if (cLogin != srvLogin)
+            {
+                WCFClientError detail = new WCFClientError(16, "Неверный контекст безопасности", "setApplyChoice", string.Join(", ", aData));
+                throw new WebFaultException<WCFClientError>(detail, HttpStatusCode.BadRequest);
+            }
+
+            if (cProc == "EquivalentPush")
+            {
+                srvProc = "zKdx_ProcessNotBuy_EquivalentPushOper";
+            }
+            if (cProc == "VersionAdvance")
+            {
+                srvProc = "zKdx_ProcessNotBuy_VersionAdvanceOper";
+            }
+
+            if (srvProc == "")
+            {
+                WCFClientError detail = new WCFClientError(16, "Не указана процедура выполнения", "setApplyChoice", string.Join(", ", aData));
+                throw new WebFaultException<WCFClientError>(detail, HttpStatusCode.BadRequest);
+            }
+
+            using (SqlConnection con = new SqlConnection(conn))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = srvProc;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.Add("@ReturnValue", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+                    cmd.Parameters.AddWithValue("@Item", cItem); //SqlDbType.NVarChar, 30).Value = cItem;
+                    cmd.Parameters.AddWithValue("@Value", cValue); //SqlDbType.NVarChar, 50).Value = cIsLeadTime999;
+                    cmd.Parameters.AddWithValue("@Login", cLogin); //SqlDbType.NVarChar, 128).Value = cLogin;
+                    cmd.Parameters.Add("@Infobar", SqlDbType.NVarChar, 2800).Direction = ParameterDirection.Output;
+                    try
+                    {
+                        con.Open();
+                        int affected = cmd.ExecuteNonQuery();
+                        result.Severity = Convert.ToInt32(cmd.Parameters["@ReturnValue"].Value);
+                        result.Infobar = Convert.ToString(cmd.Parameters["@Infobar"].Value);
+                    }
+                    catch (Exception e)
+                    {
+                        WCFServerError detail = new WCFServerError(16, e.Message, "setApplyChoice", string.Join(", ", aData));
+                        throw new WebFaultException<WCFServerError>(detail, HttpStatusCode.BadRequest);
+                    }
+
+                    if (result.Severity != 0)
+                    {
+                        WCFClientError detail = new WCFClientError(result.Severity, result.Infobar, "setApplyChoice", string.Join(", ", aData));
+                        throw new WebFaultException<WCFClientError>(detail, HttpStatusCode.BadRequest);
+                    }
+                    else
+                    {
+                        execResult.Severity = result.Severity;
+                        execResult.Infobar = result.Infobar;
+                    }
+                }
+            }
+
+            return execResult;
         }
 
         public ServiceUserData getServiceUserData()
@@ -277,6 +363,12 @@ namespace ERPSyte2.Services
         [FaultContract(typeof(WCFClientError))]
         [FaultContract(typeof(WCFServerError))]
         List<ProcessNotBuyRow> getProcessNotBuyRows(List<string> aData);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(WCFClientError))]
+        [FaultContract(typeof(WCFServerError))]
+        ExecResult setApplyChoice(List<string> aData);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -365,6 +457,24 @@ namespace ERPSyte2.Services
     }
 
 
+    [DataContract]
+    public class ExecResult
+    {
+        [DataMember]
+        public int Severity { get; set; }
+        [DataMember]
+        public string Infobar { get; set; }
+
+        public ExecResult()
+            : this(0, "")
+        {
+        }
+        public ExecResult(int severity, string infobar)
+        {
+            Severity = severity;
+            Infobar = infobar;
+        }
+    }
 
     [DataContract]
     public class ServiceUserData

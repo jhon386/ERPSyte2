@@ -9,6 +9,76 @@
             bApplyFilter.addEventListener("click", doApplyFilter);
     }
 
+    function doApplyChoice(event) {
+        try {
+            //alert("doApplyChoice: proc: " + this.dataset.proc + " item: " + this.dataset.item + " value: " + this.dataset.value);
+            var cProc = this.dataset.proc
+            var cItem = this.dataset.item;
+            var cValue = this.dataset.value
+            var cLogin = document.getElementById("ftUserDataLogin").innerText;
+
+            var choiceData = [];
+            choiceData[0] = cProc;
+            choiceData[1] = cItem;
+            choiceData[2] = cValue;
+            choiceData[3] = cLogin;
+            var postData = '{ "aData":' + JSON.stringify(choiceData) + '}';
+
+            $.ajax({
+                url: "../Services/WCFService.svc/ajax/setApplyChoice",
+                type: "POST",
+                data: postData,
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function () {
+                    $.blockUI({
+                        css: {
+                            padding: 0,
+                            margin: 0,
+                            width: '30%',
+                            top: '40%',
+                            left: '35%',
+                            textAlign: 'center',
+                            color: '#000000',
+                            border: '3px solid #aaa',
+                            backgroundColor: '#ffffff',
+                            cursor: 'wait'
+                        },
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.6
+                        },
+                        message: '<img src=../Image/busy.gif style="vertical-align:middle;">  <b style="vertical-align:middle; font-size:larger;">Подождите, идет&nbsp;запрос&nbsp;данных.</b>'
+                    });
+                },
+                //complete: function () { $.unblockUI(); },
+                success: returnChoiceData,
+                error: returnError
+            });
+
+            if (event)
+                event.preventDefault ? event.preventDefault() : (event.returnValue = false); //убрать реакцию браузера на событие W3C / IE 
+            return false;
+        } catch (e) {
+            alert(' Произошла ошибка: ' + e.name + ' ' + e.message);
+        }
+    }
+
+    function returnChoiceData(data) {
+        try {
+            //var responseText = JSON.parse(data);
+
+            //if (responseText.Severity == 0) {
+                doApplyFilter();
+            //}
+
+        } catch (e) {
+            alert(' Произошла ошибка: ' + e.name + ' ' + e.message);
+        } finally {
+            //$.unblockUI();
+        }
+    }
+
     function doApplyFilter(event) {
         try {
             var cItem = document.getElementById('Item');
@@ -69,7 +139,8 @@
                 error: returnError
             });
 
-            event.preventDefault ? event.preventDefault() : (event.returnValue = false); //убрать реакцию браузера на событие W3C / IE 
+            if (event)
+                event.preventDefault ? event.preventDefault() : (event.returnValue = false); //убрать реакцию браузера на событие W3C / IE 
             return false;
         } catch (e) {
             alert(' Произошла ошибка: ' + e.name + ' ' + e.message);
@@ -139,14 +210,16 @@
                     vString += "<td class=itcolct>" + vIsAnalogRegistered + "</td>";
                     vString += "<td class=itcolct>" + vIsAnalogApproved + "</td>";
                     if (vEquivalentPush_Grant) {
-                        vString += "<td class=itcolct><a href='#' onclick='return testFunction(\"EquivalentPush\",\"" + vItem + "\"," + vIsEquivalentPush + ");' " +
+                        vString += "<td class=itcolct><a href='#' " +
+                            "data-proc=\"EquivalentPush\" data-item=\"" + vItem + "\" data-value=" + vIsEquivalentPush + " " +
                             "title='" + (vIsEquivalentPush === 1 ? "Нажмите, чтобы снять метку" : "Нажмите, чтобы установить метку") + "' " +
                             "class='" + (vIsEquivalentPush === 1 ? "aButton1" : "aButton0") + "'>" +
                             (vIsEquivalentPush === 1 ? "Да" : "Нет") + "</a></td>";
                     } else
                         vString += "<td class=itcolct>" + (vIsEquivalentPush === 1 ? "Да" : "&nbsp;") + "</td>";
                     if (vVersionAdvance_Grant) {
-                        vString += "<td class=itcolct><a href='#' onclick='return testFunction(\"VersionAdvance\",\"" + vItem + "\"," + vIsVersionAdvance + ");' " +
+                        vString += "<td class=itcolct><a href='#' " +
+                            "data-proc=\"VersionAdvance\" data-item=\"" + vItem + "\" data-value=" + vIsVersionAdvance + " " +
                             "title='" + (vIsVersionAdvance === 1 ? "Нажмите, чтобы снять метку" : "Нажмите, чтобы установить метку") + "' " +
                             "class='" + (vIsVersionAdvance === 1 ? "aButton1" : "aButton0") + "'>" +
                             (vIsVersionAdvance === 1 ? "Да" : "Нет") + "</a></td>";
@@ -163,6 +236,7 @@
                 $("[id*=GridViewData]").append("<tr><td colspan=9 class=itcolct>Нет данных, удовлетворяющих условию фильтрации.</td></tr>");
             }
 
+            $(".aButton0, .aButton1").bind("click", doApplyChoice);
             $("#tabs").tabs("option", "active", 0);
 
         } catch (e) {
@@ -214,9 +288,3 @@
     }
 
 })(window);
-
-function testFunction(action, item, value) {
-    alert("action: " + action + " item: " + item + " value: " + value);
-    return false;
-}
-
