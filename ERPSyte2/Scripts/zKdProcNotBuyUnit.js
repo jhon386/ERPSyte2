@@ -1,21 +1,22 @@
 ﻿(function (window, undefined) {
     "use strict";
 
-    document.addEventListener("DOMContentLoaded", addButtonEvent);
+    $("document").ready(addButtonEvent); //docReady(addButtonEvent); //document.addEventListener("DOMContentLoaded", addButtonEvent);
 
     function addButtonEvent() {
-        var bApplyFilter = document.getElementById("bApplyFilter");
-        if (bApplyFilter)
-            bApplyFilter.addEventListener("click", doApplyFilter);
+        //var bApplyFilter = document.getElementById("bApplyFilter");
+        //if (bApplyFilter)
+        //    bApplyFilter.addEventListener("click", doApplyFilter);
+        $("#bApplyFilter").bind("click", doApplyFilter);
     }
 
     function doApplyChoice(event) {
         try {
             //alert("doApplyChoice: proc: " + this.dataset.proc + " item: " + this.dataset.item + " value: " + this.dataset.value);
-            var cProc = this.dataset.proc
-            var cItem = this.dataset.item;
-            var cValue = this.dataset.value
-            var cLogin = document.getElementById("ftUserDataLogin").innerText;
+            var cProc = this.getAttribute("data-proc"); //dataset.proc
+            var cItem = this.getAttribute("data-item"); //dataset.item;
+            var cValue = this.getAttribute("data-value"); //dataset.value
+            var cLogin = document.getElementById("ftUserDataLogin").value;
 
             var choiceData = [];
             choiceData[0] = cProc;
@@ -91,7 +92,7 @@
             var cIsVersionAdvance = document.getElementById('IsVersionAdvance');
             var cIsApplyClosed = document.getElementById('IsApplyClosed');
             var cIsLeadTime999 = document.getElementById('IsLeadTime999');
-            var cLogin = document.getElementById("ftUserDataLogin").innerText;
+            var cLogin = document.getElementById("ftUserDataLogin").value;
 
             var filterData = [];
             filterData[0] = cItem.value;

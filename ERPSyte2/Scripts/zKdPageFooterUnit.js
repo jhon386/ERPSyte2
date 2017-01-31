@@ -1,9 +1,9 @@
 ﻿(function (window, undefined) {
     "use strict";
 
-    document.addEventListener("DOMContentLoaded", loadCurrYear);
-    document.addEventListener("DOMContentLoaded", loadUserData);
-    document.addEventListener("DOMContentLoaded", initPage);
+    $("document").ready(loadCurrYear); //docReady(loadCurrYear); //document.addEventListener("DOMContentLoaded", loadCurrYear);
+    $("document").ready(loadUserData); //docReady(loadUserData); //document.addEventListener("DOMContentLoaded", loadUserData);
+    $("document").ready(initPage); //docReady(initPage); //document.addEventListener("DOMContentLoaded", initPage);
 
     function loadCurrYear() {
         var cCurrYear = document.getElementById("ftCurrYear");
@@ -65,10 +65,10 @@
                 });
 
                 cUserData.innerHTML = vUID + ": " + vName;
-                cUserDataLogin.innerHTML = vLogin;
-                cUserDataUID.innerHTML = vUID;
-                cUserDataName.innerHTML = vName;
-                cUserDatasName.innerHTML = vsName;
+                cUserDataLogin.value = vLogin;
+                cUserDataUID.value = vUID;
+                cUserDataName.value = vName;
+                cUserDatasName.value = vsName;
             }
 
         } catch (e) {

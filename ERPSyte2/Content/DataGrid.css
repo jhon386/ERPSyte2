@@ -4,6 +4,7 @@
 
 .hdcol{
     background-color: ButtonFace;
+    border-color: #000;
     border-style: solid;    
     border-width: 1px;
     font-family: Arial, "Segoe UI", Verdana, Helvetica, Sans-Serif;
@@ -15,6 +16,7 @@
 }
 
 .itcol, .itcolct, .itcolrt, .itcolnw, .itcol300{
+    border-color: #000;
     border-style: solid;    
     border-width: 1px;
     font-family: Arial, "Segoe UI", Verdana, Helvetica, Sans-Serif;
