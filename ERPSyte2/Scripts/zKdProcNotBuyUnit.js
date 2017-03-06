@@ -92,6 +92,7 @@
             var cIsVersionAdvance = document.getElementById('IsVersionAdvance');
             var cIsApplyClosed = document.getElementById('IsApplyClosed');
             var cIsLeadTime999 = document.getElementById('IsLeadTime999');
+            //логин в паралельной процедуре может придти позже или паралельно, тогда права подвиснут до следующего запуска. проверить перед запуском
             var cLogin = document.getElementById("ftUserDataLogin").value;
 
             var filterData = [];
