@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProcessNotBuy.aspx.cs" Inherits="ERPSyte2.ViewOthers.ProcessNotBuy" MasterPageFile="~/ViewOthers/Site.Master" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server" ID="HeadContent">
+    <meta http-equiv="refresh" content="0; URL='ProcNotBuyItems.html'" />
     <link type="text/css" rel="Stylesheet" href="../Content/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="../Scripts/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.10.4.min.js"></script>
