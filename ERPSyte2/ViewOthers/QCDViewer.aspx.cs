@@ -333,6 +333,7 @@ namespace ERPSyte2.ViewOthers
             {
                 SqlDataAdapter da = new SqlDataAdapter("zKdx_QCD_JIIViewer", con);
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand.CommandTimeout = 900;
 
                 #region Parameters SqlDataAdapter
                 da.SelectCommand.Parameters.Add("@pShowCooperate", SqlDbType.Bit).Value = cShowCooperate;
@@ -390,6 +391,7 @@ namespace ERPSyte2.ViewOthers
 
                 da = new SqlDataAdapter("zKdx_QCD_JIIViewerDetails", con);
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand.CommandTimeout = 900;
 
                 #region Parameters SqlDataAdapter
                 da.SelectCommand.Parameters.Add("@pShowCooperate", SqlDbType.Bit).Value = cShowCooperate;
@@ -469,6 +471,7 @@ namespace ERPSyte2.ViewOthers
 
                 da = new SqlDataAdapter("zKdx_QCD_JIIViewerVendors", con);
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand.CommandTimeout = 900;
 
                 #region Parameters SqlDataAdapter
                 da.SelectCommand.Parameters.Add("@pShowCooperate", SqlDbType.Bit).Value = cShowCooperate;
