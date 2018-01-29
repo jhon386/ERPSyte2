@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="AccessDenied.aspx" />
     <Content Include="Content\DataGrid.css" />
+    <Content Include="Content\FilterStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -145,7 +146,9 @@
     <Content Include="Internal\Mission.aspx" />
     <Content Include="Internal\Missions.aspx" />
     <Content Include="Internal\ServerVariables.aspx" />
+    <Content Include="OtherFiles\ToDo.html" />
     <Content Include="Scripts\docready.js" />
+    <Content Include="Scripts\QCDjournalUnit.js" />
     <Content Include="Scripts\zKdDateFormatUnit.js" />
     <Content Include="Scripts\zKdPageFooterUnit.js" />
     <Content Include="Scripts\zKdProcNotBuyUnit.js" />
@@ -154,6 +157,8 @@
     <Content Include="ViewOthers\ProcessNotBuy.aspx" />
     <Content Include="ViewOthers\ProcNotBuy.aspx" />
     <Content Include="ViewOthers\ProcNotBuyItems.html" />
+    <Content Include="ViewOthers\QCDjournal.html" />
+    <Content Include="ViewOthers\QCDtest.html" />
     <Content Include="ViewOthers\QCDViewer.aspx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery.blockUI.js" />
@@ -163,6 +168,7 @@
     <Content Include="TestPages\TestAjax.aspx" />
     <Content Include="TestPages\TestAjaxWOAspNet.html" />
     <Content Include="ViewOthers\UserIdentity.aspx" />
+    <Content Include="OtherFiles\соответствие полей.xlsx" />
     <None Include="Properties\PublishProfiles\erp-syte-test.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\d3.js" />

@@ -55,6 +55,47 @@
                 cItem, cDescription, cRepeated, cTemaNIOKR, cVend, cVendN, cChecker, cScrap, cLot, 
                 cWaitWork, cWaitANP, cWaitWorkDay, cWaitANPDay, cShowOnlyLocQCD, cShowOnlyLocWork, cUM);
         }
+
+        function GetParamAndExportA(){
+            var cDateTransferFrom = "";
+            var cDateTransferTo = "";
+            var cDateAcceptFrom = "";
+            var cDateAcceptTo = "";
+            var cDateTransferFrom2 = "";
+            var cDateTransferTo2 = "";
+            var cDateAcceptFrom2 = "";
+            var cDateAcceptTo2 = "";
+            var cItem = "";
+            var cDescription = "";
+            var cRepeated = "";
+            var cTemaNIOKR = "";
+            var cVend = "";
+            var cVendN = "";
+            var cChecker = "";
+            var cScrap = "";
+            var cLot = "";
+            var cWaitWork = 0; 
+            var cWaitANP = 0; 
+            var cWaitWorkDay = 0;
+            var cWaitANPDay = 0;
+            var cShowTo = "";
+            var cShowCooperate = 1;
+            var cShowBuy = 1;
+            var cShowOnlyLocQCD = 0; 
+            var cShowOnlyLocWork = 0; 
+            var cUM = "";
+            var cShowRecordset_primary = 1;
+            var cShowRecordset_secondary = 0;
+            var cShowRecordset_details = 0;
+            var cShowRecordset_vendors =0;
+
+            ExportToExcelClientA(cShowCooperate, cShowBuy,
+                cDateTransferFrom, cDateTransferTo, cDateAcceptFrom, cDateAcceptTo,
+                cDateTransferFrom2, cDateTransferTo2, cDateAcceptFrom2, cDateAcceptTo2,
+                cItem, cDescription, cRepeated, cTemaNIOKR, cVend, cVendN, cChecker, cScrap, cLot, 
+                cWaitWork, cWaitANP, cWaitWorkDay, cWaitANPDay, cShowOnlyLocQCD, cShowOnlyLocWork, cUM,
+                cShowRecordset_primary, cShowRecordset_secondary, cShowRecordset_details, cShowRecordset_vendors);
+        }
     </script>
     <style type="text/css">
         .bar {
@@ -347,7 +388,8 @@
                 <tr style="margin-top:10px;">
                     <td colspan="9" class="tdcntr">
                         <asp:Button ID="ApplyFilter" runat="server" Text="Применить" />&nbsp;&nbsp;&nbsp;
-                        <input type="button" id="btnExport3" value="Экспорт в Excel" onclick="GetParamAndExport()" /> 
+                        <input type="button" id="btnExport3" value="Экспорт в Excel" onclick="GetParamAndExport()" />&nbsp;&nbsp;&nbsp;
+                        <input type="button" id="btnExportA" value="Экспорт в Excel всей истории" onclick="GetParamAndExportA()" />  
                         <a style ="font-size: 10px; font-family:Arial, sans-serif; vertical-align:super " href ="http://int-srv/Help/HelpExcel/HelpExcel.html">Настройка экспорта</a>
                     </td>
                 </tr>

@@ -324,6 +324,444 @@ namespace ERPSyte2.Services
         {
             return new ServiceUserData();
         }
+
+        public List<QCDUMsRow> getQCDUMsRows()
+        {
+            SqlDataReader dr = null;
+            List<QCDUMsRow> rowsList = new List<QCDUMsRow>();
+            ResultExecStoredProc result = new ResultExecStoredProc();
+
+            using (SqlConnection con = new SqlConnection(conn))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = "zKdx_QCD_UMsSp";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    try
+                    {
+                        con.Open();
+                        dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                        result.Severity = 0;
+                        result.Infobar = "";
+                    }
+                    catch (Exception e)
+                    {
+                        WCFServerError detail = new WCFServerError(16, e.Message, cmd.CommandText);
+                        throw new WebFaultException<WCFServerError>(detail, HttpStatusCode.BadRequest);
+                    }
+
+                    if (result.Severity != 0)
+                    {
+                        WCFClientError detail = new WCFClientError(result.Severity, result.Infobar, cmd.CommandText);
+                        throw new WebFaultException<WCFClientError>(detail, HttpStatusCode.BadRequest);
+                    }
+                    else
+                    if (dr != null && dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            rowsList.Add(new QCDUMsRow
+                            {
+                                Um = dr["u_m"].ToString(),
+                                Description = dr["description"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return rowsList;
+        }
+
+        public List<QCDTemaNIOKRRow> getQCDTemaNIOKRRows()
+        {
+            SqlDataReader dr = null;
+            List<QCDTemaNIOKRRow> rowsList = new List<QCDTemaNIOKRRow>();
+            ResultExecStoredProc result = new ResultExecStoredProc();
+
+            using (SqlConnection con = new SqlConnection(conn))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = "zKdx_QCD_TemaNIOKRSp";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    try
+                    {
+                        con.Open();
+                        dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                        result.Severity = 0;
+                        result.Infobar = "";
+                    }
+                    catch (Exception e)
+                    {
+                        WCFServerError detail = new WCFServerError(16, e.Message, cmd.CommandText);
+                        throw new WebFaultException<WCFServerError>(detail, HttpStatusCode.BadRequest);
+                    }
+
+                    if (result.Severity != 0)
+                    {
+                        WCFClientError detail = new WCFClientError(result.Severity, result.Infobar, cmd.CommandText);
+                        throw new WebFaultException<WCFClientError>(detail, HttpStatusCode.BadRequest);
+                    }
+                    else
+                    if (dr != null && dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            rowsList.Add(new QCDTemaNIOKRRow
+                            {
+                                TemaNIOKR = dr["TemaNIOKR"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return rowsList;
+        }
+
+        public List<QCDCheckerNameRow> getQCDCheckerNameRows()
+        {
+            SqlDataReader dr = null;
+            List<QCDCheckerNameRow> rowsList = new List<QCDCheckerNameRow>();
+            ResultExecStoredProc result = new ResultExecStoredProc();
+
+            using (SqlConnection con = new SqlConnection(conn))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = "zKdx_QCD_CheckerNameSp";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    try
+                    {
+                        con.Open();
+                        dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                        result.Severity = 0;
+                        result.Infobar = "";
+                    }
+                    catch (Exception e)
+                    {
+                        WCFServerError detail = new WCFServerError(16, e.Message, cmd.CommandText);
+                        throw new WebFaultException<WCFServerError>(detail, HttpStatusCode.BadRequest);
+                    }
+
+                    if (result.Severity != 0)
+                    {
+                        WCFClientError detail = new WCFClientError(result.Severity, result.Infobar, cmd.CommandText);
+                        throw new WebFaultException<WCFClientError>(detail, HttpStatusCode.BadRequest);
+                    }
+                    else
+                    if (dr != null && dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            rowsList.Add(new QCDCheckerNameRow
+                            {
+                                CheckerName = dr["CheckerName"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return rowsList;
+        }
+
+        public List<QCDjournalRow> getQCDjournalRows(List<string> aData)
+        {
+            SqlDataReader dr = null;
+            List<QCDjournalRow> listQCDjournalRows = new List<QCDjournalRow>();
+            ResultExecStoredProc result = new ResultExecStoredProc();
+
+            bool cShowCooperate = false;
+            bool cShowBuy = false;
+
+            string cDateTransferFrom = "";
+            string cDateTransferTo = "";
+            string cDateAcceptFrom = "";
+            string cDateAcceptTo = "";
+
+            string cDateTransferFrom2 = "";
+            string cDateTransferTo2 = "";
+            string cDateAcceptFrom2 = "";
+            string cDateAcceptTo2 = "";
+
+            string cItem = "";
+            string cDescription = "";
+            string cRepeated = "";
+            string cTemaNIOKR = "";
+            string cVend = "";
+            string cVendN = "";
+            string cChecker = "";
+            string cScrap = "";
+            string cLot = "";
+
+            bool cWaitWork = false;
+            bool cWaitANP = false;
+            string cWaitWorkDay = "";
+            string cWaitANPDay = "";
+
+            bool cShowOnlyLocQCD = false;
+            bool cShowOnlyLocWork = false;
+            string cUM = "";
+
+            bool cShowRecordset_primary = false;
+            bool cShowRecordset_secondary = false;
+            bool cShowRecordset_details = false;
+            bool cShowRecordset_vendors = false;
+
+            if (aData != null)
+            {
+                if (aData.Count > 0 && aData[0] != null)
+                    cShowCooperate = aData[0] == "1";
+                if (aData.Count > 1 && aData[1] != null)
+                    cShowBuy = aData[1] == "1";
+
+                if (aData.Count > 2 && aData[2] != null)
+                    cDateTransferFrom = aData[2];
+                if (aData.Count > 3 && aData[3] != null)
+                    cDateTransferTo = aData[3];
+                if (aData.Count > 4 && aData[4] != null)
+                    cDateAcceptFrom = aData[4];
+                if (aData.Count > 5 && aData[5] != null)
+                    cDateAcceptTo = aData[5];
+
+                if (aData.Count > 6 && aData[6] != null)
+                    cDateTransferFrom2 = aData[6];
+                if (aData.Count > 7 && aData[7] != null)
+                    cDateTransferTo2 = aData[7];
+                if (aData.Count > 8 && aData[8] != null)
+                    cDateAcceptFrom2 = aData[8];
+                if (aData.Count > 9 && aData[9] != null)
+                    cDateAcceptTo2 = aData[9];
+
+                if (aData.Count > 10 && aData[10] != null)
+                    cItem = aData[10];
+                if (aData.Count > 11 && aData[11] != null)
+                    cDescription = aData[11];
+                if (aData.Count > 12 && aData[12] != null)
+                    cRepeated = aData[12];
+                if (aData.Count > 13 && aData[13] != null)
+                    cTemaNIOKR = aData[13];
+                if (aData.Count > 14 && aData[14] != null)
+                    cVend = aData[14];
+                if (aData.Count > 15 && aData[15] != null)
+                    cVendN = aData[15];
+                if (aData.Count > 16 && aData[16] != null)
+                    cChecker = aData[16];
+                if (aData.Count > 17 && aData[17] != null)
+                    cScrap = aData[17];
+                if (aData.Count > 18 && aData[18] != null)
+                    cLot = aData[18];
+
+                if (aData.Count > 19 && aData[19] != null)
+                    cWaitWork = aData[19] == "";
+                if (aData.Count > 20 && aData[20] != null)
+                    cWaitANP = aData[20] == "";
+                if (aData.Count > 21 && aData[21] != null)
+                    cWaitWorkDay = aData[21];
+                if (aData.Count > 22 && aData[22] != null)
+                    cWaitANPDay = aData[22];
+
+                if (aData.Count > 23 && aData[23] != null)
+                    cShowOnlyLocQCD = aData[23] == "1";
+                if (aData.Count > 24 && aData[24] != null)
+                    cShowOnlyLocWork = aData[24] == "1";
+                if (aData.Count > 25 && aData[25] != null)
+                    cUM = aData[25];
+
+                if (aData.Count > 26 && aData[26] != null)
+                    cShowRecordset_primary = aData[26] == "1";
+                if (aData.Count > 27 && aData[27] != null)
+                    cShowRecordset_secondary = aData[27] == "1";
+                if (aData.Count > 28 && aData[28] != null)
+                    cShowRecordset_details = aData[28] == "1";
+                if (aData.Count > 29 && aData[29] != null)
+                    cShowRecordset_vendors = aData[29] == "1";
+            }
+
+            using (SqlConnection con = new SqlConnection(conn))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = "zKdx_QCD_JIIViewerA";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.Add("@ReturnValue", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+                    cmd.Parameters.AddWithValue("@pShowCooperate", cShowCooperate); 
+                    cmd.Parameters.AddWithValue("@pShowBuy", cShowBuy);
+
+                    cmd.Parameters.AddWithValue("@pDateTransferFrom", cDateTransferFrom);
+                    cmd.Parameters.AddWithValue("@pDateTransferTo", cDateTransferTo);
+                    cmd.Parameters.AddWithValue("@pDateAcceptFrom", cDateAcceptFrom);
+                    cmd.Parameters.AddWithValue("@pDateAcceptTo", cDateAcceptTo);
+
+                    cmd.Parameters.AddWithValue("@pDateTransferFrom2", cDateTransferFrom2);
+                    cmd.Parameters.AddWithValue("@pDateTransferTo2", cDateTransferTo2);
+                    cmd.Parameters.AddWithValue("@pDateAcceptFrom2", cDateAcceptFrom2);
+                    cmd.Parameters.AddWithValue("@pDateAcceptTo2", cDateAcceptTo2);
+
+                    cmd.Parameters.AddWithValue("@pItem", cItem); 
+                    cmd.Parameters.AddWithValue("@pDescription", cDescription); 
+                    cmd.Parameters.AddWithValue("@pRepeated", cRepeated); 
+                    cmd.Parameters.AddWithValue("@pTemaNIOKR", cTemaNIOKR);
+                    cmd.Parameters.AddWithValue("@pVend", cVend); 
+                    cmd.Parameters.AddWithValue("@pVendN", cVendN);
+                    cmd.Parameters.AddWithValue("@pChecker", cChecker);
+                    cmd.Parameters.AddWithValue("@pScrap", cScrap); 
+                    cmd.Parameters.AddWithValue("@pLot", cLot); 
+
+                    cmd.Parameters.AddWithValue("@pWaitWork", cWaitWork);
+                    cmd.Parameters.AddWithValue("@pWaitANP", cWaitANP); 
+                    cmd.Parameters.AddWithValue("@pWaitWorkDay", cWaitWorkDay); 
+                    cmd.Parameters.AddWithValue("@pWaitANPDay", cWaitANPDay); 
+
+                    cmd.Parameters.Add("@Infobar", SqlDbType.NVarChar, 2800).Direction = ParameterDirection.Output;
+
+                    cmd.Parameters.AddWithValue("@pShowOnlyLocQCD", cShowOnlyLocQCD);
+                    cmd.Parameters.AddWithValue("@pShowOnlyLocWork", cShowOnlyLocWork); 
+                    cmd.Parameters.AddWithValue("@pUM", cUM);
+
+                    cmd.Parameters.AddWithValue("@pShowRecordset_primary", cShowRecordset_primary);
+                    cmd.Parameters.AddWithValue("@pShowRecordset_secondary", cShowRecordset_secondary);
+                    cmd.Parameters.AddWithValue("@pShowRecordset_details", cShowRecordset_details);
+                    cmd.Parameters.AddWithValue("@pShowRecordset_vendors", cShowRecordset_vendors);
+                    try
+                    {
+                        con.Open();
+                        dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                        result.Severity = Convert.ToInt32(cmd.Parameters["@ReturnValue"].Value);
+                        result.Infobar = Convert.ToString(cmd.Parameters["@Infobar"].Value);
+                    }
+                    catch (Exception e)
+                    {
+                        WCFServerError detail = new WCFServerError(16, e.Message, cmd.CommandText, string.Join(", ", aData));
+                        throw new WebFaultException<WCFServerError>(detail, HttpStatusCode.BadRequest);
+                    }
+
+                    if (result.Severity != 0)
+                    {
+                        WCFClientError detail = new WCFClientError(result.Severity, result.Infobar, cmd.CommandText, string.Join(", ", aData));
+                        throw new WebFaultException<WCFClientError>(detail, HttpStatusCode.BadRequest);
+                    }
+                    else
+                    if (dr != null && dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            int fjii_num = Convert.ToInt32(dr["jii_num"]);
+                            int? ftrans_num = (dr["trans_num"] is DBNull) ? (int?)null : Convert.ToInt32(dr["trans_num"]); 
+
+                            DateTime fDateTransfer = (DateTime)dr["DateTransfer"];
+                            string fItem = dr["Item"].ToString();
+                            string fDescription = dr["Description"].ToString();
+                            string fLot = dr["Lot"].ToString();
+                            string fPurchase = dr["Purchase"].ToString();
+                            string fKind = dr["Kind"].ToString();
+                            string fTemaNIOKR = dr["TemaNIOKR"].ToString();
+                            string fSerNums = dr["SerNums"].ToString();
+                            byte fRepeated = Convert.ToByte(dr["Repeated"]);
+                            string fDocumentIncom = dr["DocumentIncom"].ToString();
+                            decimal fQty = Convert.ToDecimal(dr["Qty"]);
+                            string fAnpNum = dr["AnpNum"].ToString();
+                            string fAnpScrap = dr["AnpScrap"].ToString();
+                            string fVendNum = dr["VendNum"].ToString();
+                            string fVendName = dr["VendName"].ToString();
+                            string fCheckerName = dr["CheckerName"].ToString();
+                            string fAuthorName = dr["AuthorName"].ToString();
+                            string fNote = dr["Note"].ToString();
+
+                            string fwhse = dr["whse"].ToString();
+                            decimal fDerQtyAccepted = Convert.ToDecimal(dr["DerQtyAccepted"]);
+                            decimal fDerQtyScrapped = Convert.ToDecimal(dr["DerQtyScrapped"]);
+                            decimal fDerScrapPercent = Convert.ToDecimal(dr["DerScrapPercent"]);
+                            string fDerDocumentNum = dr["DerDocumentNum"].ToString();
+                            bool fDerManual = Convert.ToBoolean(dr["DerManual"]);
+                            decimal fDerQtyAvailable = Convert.ToDecimal(dr["DerQtyAvailable"]);
+
+                            string fUM = dr["UM"].ToString();
+
+                            DateTime? fDerDateAnpScrap = (dr["DerDateAnpScrap"] is DBNull) ? (DateTime?)null : (DateTime)dr["DerDateAnpScrap"];
+                            DateTime? fDerDateLastAccept = (dr["DerDateLastAccept"] is DBNull) ? (DateTime?)null : (DateTime)dr["DerDateLastAccept"];
+                            DateTime? fDerDateAccept = (dr["DerDateAccept"] is DBNull) ? (DateTime?)null : (DateTime)dr["DerDateAccept"];
+
+                            decimal fDerQty1 = Convert.ToDecimal(dr["DerQty1"]);
+                            decimal fDerQty2 = Convert.ToDecimal(dr["DerQty2"]);
+                            decimal fDerQty3 = Convert.ToDecimal(dr["DerQty3"]);
+                            decimal fDerQty4 = Convert.ToDecimal(dr["DerQty4"]);
+                            decimal fDerQty5 = Convert.ToDecimal(dr["DerQty5"]);
+                            decimal fDerQty6 = Convert.ToDecimal(dr["DerQty6"]);
+                            decimal fDerQty7 = Convert.ToDecimal(dr["DerQty7"]);
+                            decimal fDerQty8 = Convert.ToDecimal(dr["DerQty8"]);
+                            decimal fDerQty9 = Convert.ToDecimal(dr["DerQty9"]);
+
+                            int? fRcvTransNum = (dr["RcvTransNum"] is DBNull) ? (int?)null : Convert.ToInt32(dr["RcvTransNum"]); 
+                            string fRcvLoc = dr["RcvLoc"].ToString();
+                            string fRcvName = dr["RcvName"].ToString();
+
+                            listQCDjournalRows.Add(new QCDjournalRow
+                            {
+                                jii_num = fjii_num,
+                                trans_num = ftrans_num,
+
+                                DateTransfer = fDateTransfer,
+                                Item = fItem,
+                                Description = fDescription,
+                                Lot = fLot,
+                                Purchase = fPurchase,
+                                Kind = fKind,
+                                TemaNIOKR = fTemaNIOKR,
+                                SerNums = fSerNums,
+                                Repeated = fRepeated,
+                                DocumentIncom = fDocumentIncom,
+                                Qty = fQty,
+                                AnpNum = fAnpNum,
+                                AnpScrap = fAnpScrap,
+                                VendNum = fVendNum,
+                                VendName = fVendName,
+                                CheckerName = fCheckerName,
+                                AuthorName = fAuthorName,
+                                Note = fNote,
+
+                                whse = fwhse,
+                                DerQtyAccepted = fDerQtyAccepted,
+                                DerQtyScrapped = fDerQtyScrapped,
+                                DerScrapPercent = fDerScrapPercent,
+                                DerDocumentNum = fDerDocumentNum,
+                                DerManual = fDerManual,
+                                DerQtyAvailable = fDerQtyAvailable,
+
+                                UM = fUM,
+
+                                DerDateAnpScrap = fDerDateAnpScrap,
+                                DerDateLastAccept = fDerDateLastAccept,
+                                DerDateAccept = fDerDateAccept,
+
+                                DerQty1 = fDerQty1,
+                                DerQty2 = fDerQty2,
+                                DerQty3 = fDerQty3,
+                                DerQty4 = fDerQty4,
+                                DerQty5 = fDerQty5,
+                                DerQty6 = fDerQty6,
+                                DerQty7 = fDerQty7,
+                                DerQty8 = fDerQty8,
+                                DerQty9 = fDerQty9,
+
+                                RcvTransNum = fRcvTransNum,
+                                RcvLoc = fRcvLoc,
+                                RcvName = fRcvName
+                            });
+                        }
+                    }
+                }
+            }
+
+            return listQCDjournalRows;
+        }
+
     }
 
     [ServiceContract]
@@ -373,6 +811,30 @@ namespace ERPSyte2.Services
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         ServiceUserData getServiceUserData();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(WCFClientError))]
+        [FaultContract(typeof(WCFServerError))]
+        List<QCDUMsRow> getQCDUMsRows();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(WCFClientError))]
+        [FaultContract(typeof(WCFServerError))]
+        List<QCDTemaNIOKRRow> getQCDTemaNIOKRRows();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(WCFClientError))]
+        [FaultContract(typeof(WCFServerError))]
+        List<QCDCheckerNameRow> getQCDCheckerNameRows();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(WCFClientError))]
+        [FaultContract(typeof(WCFServerError))]
+        List<QCDjournalRow> getQCDjournalRows(List<string> aData);
     }
 
     [ServiceContract(Namespace = "")]
@@ -619,32 +1081,153 @@ namespace ERPSyte2.Services
 
     }
 
-/*
     [DataContract]
-    public class FaultExecStoredProc
+    public class QCDUMsRow
     {
-        private int _ErrorCode = 0;
-        private string _Message = string.Empty;
-
-        public FaultExecStoredProc(int Severity, string Infobar)
-        {
-            _ErrorCode = Severity;
-            _Message = Infobar;
-        }
+        [DataMember]
+        public string Um { get; set; }
 
         [DataMember]
-        public int ErrorCode
-        {
-            get { return _ErrorCode; }
-            set { _ErrorCode = value; }
-        }
-        [DataMember]
-        public string Message
-        {
-            get { return _Message; }
-            set { _Message = value; }
-        }
+        public string Description { get; set; }
     }
-*/
+
+    [DataContract]
+    public class QCDTemaNIOKRRow
+    {
+        [DataMember]
+        public string TemaNIOKR { get; set; }
+    }
+
+    [DataContract]
+    public class QCDCheckerNameRow
+    {
+        [DataMember]
+        public string CheckerName { get; set; }
+    }
+
+    [DataContract]
+    public class QCDjournalRow
+    {
+        [DataMember]
+        public int jii_num { get; set; } // decimal(10,0) not null primary key clustered
+        [DataMember]
+        public int? trans_num { get; set; } // decimal(10,0) --Транзакция
+
+        [DataMember]
+        public DateTime DateTransfer { get; set; } // datetime --Дата передачи на ВК
+        [DataMember]
+        public string Item { get; set; } // nvarchar(30) --Код ERP
+        [DataMember]
+        public string Description { get; set; } // nvarchar(150) --Наименование
+        [DataMember]
+        public string Lot { get; set; } // nvarchar(15) --Номер партии
+        [DataMember]
+        public string Purchase { get; set; } // nvarchar(20) --Закупка
+        [DataMember]
+        public string Kind { get; set; } // nvarchar(20) --Признак
+        [DataMember]
+        public string TemaNIOKR { get; set; } // nvarchar(20) --Серия/Тема НИОКР
+        [DataMember]
+        public string SerNums { get; set; } // nvarchar(2048) --Серийные номера
+        [DataMember]
+        public byte Repeated { get; set; } // tinyint --Повторное предъявление
+        [DataMember]
+        public string DocumentIncom { get; set; } // nvarchar(30) --Номер приходного документа
+        [DataMember]
+        public decimal Qty { get; set; } // decimal(18,8) --Количество
+        [DataMember]
+        public string AnpNum { get; set; } // nvarchar(7) --АНП входная с перемещения
+        [DataMember]
+        public string AnpScrap { get; set; } // nvarchar(7) --АНП на брак выходная
+        [DataMember]
+        public string VendNum { get; set; } // nvarchar(7) --Поставщик
+        [DataMember]
+        public string VendName { get; set; } // nvarchar(60)
+        [DataMember]
+        public string CheckerName { get; set; } // nvarchar(30) --Контролер
+        [DataMember]
+        public string AuthorName { get; set; } // nvarchar(30) --Автор проводки с учетом DC
+        [DataMember]
+        public string Note { get; set; } // nvarchar(100) --Примечание
+
+        [DataMember]
+        public string whse { get; set; } // nvarchar(4) --Склад
+        [DataMember]
+        public decimal DerQtyAccepted { get; set; } // decimal(18,8) --Принято
+        [DataMember]
+        public decimal DerQtyScrapped { get; set; } // decimal(18,8) --Брак
+        [DataMember]
+        public decimal DerScrapPercent { get; set; } // decimal(18,8) --% брака
+        [DataMember]
+        public string DerDocumentNum { get; set; } // nvarchar(12) --Номер документа
+        [DataMember]
+        public bool DerManual { get; set; } // bit    --Ручной ввод
+        [DataMember]
+        public decimal DerQtyAvailable { get; set; } // decimal(18,8) --Обработать
+
+        [DataMember]
+        public string UM { get; set; } // nvarchar(3) --Е/И
+
+        [DataMember]
+        public DateTime? DerDateAnpScrap { get; set; } // datetime
+        [DataMember]
+        public DateTime? DerDateLastAccept { get; set; } // datetime
+        [DataMember]
+        public DateTime? DerDateAccept { get; set; } // datetime
+
+        [DataMember]
+        public decimal DerQty1 { get; set; } // decimal(18,8) --1	Годные(основное место хранения)
+        [DataMember]
+        public decimal DerQty2 { get; set; } // decimal(18,8) --2	Возврат поставщику
+        [DataMember]
+        public decimal DerQty3 { get; set; } // decimal(18,8) --3	Использование без доработки
+        [DataMember]
+        public decimal DerQty4 { get; set; } // decimal(18,8) --4	Доработка на участке
+        [DataMember]
+        public decimal DerQty5 { get; set; } // decimal(18,8) --5	Доработка при сборке
+        [DataMember]
+        public decimal DerQty6 { get; set; } // decimal(18,8) --6	В покрытие
+        [DataMember]
+        public decimal DerQty7 { get; set; } // decimal(18,8) --7	Потребность ПРБ
+        [DataMember]
+        public decimal DerQty8 { get; set; } // decimal(18,8) --8	Движение полуфабриката
+        [DataMember]
+        public decimal DerQty9 { get; set; } // decimal(18,8) --9	Списание
+
+        [DataMember]
+        public int? RcvTransNum { get; set; } // decimal(10,0) --транзакция получения
+        [DataMember]
+        public string RcvLoc { get; set; } // nvarchar(15) --МС получения
+        [DataMember]
+        public string RcvName { get; set; } // nvarchar(50) --имя получателя
+    }
+
+    /*
+        [DataContract]
+        public class FaultExecStoredProc
+        {
+            private int _ErrorCode = 0;
+            private string _Message = string.Empty;
+
+            public FaultExecStoredProc(int Severity, string Infobar)
+            {
+                _ErrorCode = Severity;
+                _Message = Infobar;
+            }
+
+            [DataMember]
+            public int ErrorCode
+            {
+                get { return _ErrorCode; }
+                set { _ErrorCode = value; }
+            }
+            [DataMember]
+            public string Message
+            {
+                get { return _Message; }
+                set { _Message = value; }
+            }
+        }
+    */
 
 }

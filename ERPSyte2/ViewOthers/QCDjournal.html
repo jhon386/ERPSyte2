@@ -1,0 +1,344 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+    <title>Журнал верификации закупленной продукции</title>
+    <link rel="shortcut icon" href="../Image/favicon.ico" type="image/x-icon" />
+    <link href="../Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="../Content/DataGrid.css" rel="stylesheet" />
+    <link href="../Content/Site.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.6.4.min.js"></script>
+    <script src="../Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="../Scripts/jquery.blockUI.min.js"></script>
+    <script src="../Scripts/DatePickerReady.js"></script>
+    <script src="../Scripts/json2.js"></script>
+    <script src="../Scripts/zKdDateFormatUnit.js"></script>
+    <script src="../Scripts/zKdPageFooterUnit.js"></script>
+    <script src="../Scripts/QCDjournalUnit.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        .filter td {
+            padding-left: 5px;
+            padding-right: 5px;
+            /*border: 1px solid black;*/
+        }
+
+        .filter input {
+            padding-left: 0px;
+            padding-right: 0px;
+            width: 100%;
+        }
+
+        .filter .centered input {
+            margin-left: 5px;
+            margin-right: 5px;
+            width: 30px;
+        }
+
+        .filter .tdcntr input {
+            margin-left: 5px;
+            margin-right: 5px;
+            width: auto;
+        }
+
+        .date_col {
+            width: 130px;
+        }
+
+        .TDLabel1 {
+            text-align: right;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <form id="filter">
+        <div id="body">
+            <div id="tabs" style="margin-left: 0px;">
+                <h3 style="text-align: center; margin-bottom: 10px;">Журнал верификации закупленной продукции
+                </h3>
+                <ul>
+                    <li><a href="#tabs-1">Данные</a></li>
+                    <li><a href="#tabs-2">Фильтр</a></li>
+                    <li><a href="#tabs-3">Отчет по Деталям</a></li>
+                    <li><a href="#tabs-4">Отчет по Поставщикам</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <table id="GridViewData" style="width: 1500px;">
+                        <thead class="hdhead">
+                            <tr class="hdrow">
+                                <th class="hdcol">Вх.№</th>
+                                <th class="hdcol">Дата передачи на ВК</th>
+                                <th class="hdcol">Дата проведения ВК</th>
+                                <th class="hdcol">Изделие</th>
+                                <th class="hdcol">Наименование</th>
+                                <th class="hdcol">Партия</th>
+                                <th class="hdcol">Признак</th>
+                                <th class="hdcol">Повторное предъявление</th>
+                                <th class="hdcol">Источник</th>
+                                <th class="hdcol">Номер документа</th>
+                                <th class="hdcol">Получено</th>
+                                <th class="hdcol">Е/И</th>
+                                <th class="hdcol">Принято</th>
+                                <th class="hdcol">Брак</th>
+                                <th class="hdcol">% брака</th>
+                                <th class="hdcol">Склад</th>
+                                <th class="hdcol">МС</th>
+                                <th class="hdcol">поток ВК</th>
+                                <th class="hdcol">Входное АНП</th>
+                                <th class="hdcol">Выходное АНП</th>
+                                <th class="hdcol">Поставщик</th>
+                                <th class="hdcol">Контролер</th>
+                                <th class="hdcol">Примечание</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="tabs-2">
+                    <table class="filter" style="background-color: ButtonFace; width: 900px;">
+                        <tr>
+                            <td colspan="5">&nbsp;</td>
+                            <td colspan="4" class="tdcntr">Фильтр для указания периода сравнения</td>
+                        </tr>
+
+                        <tr>
+                            <td>Дата передачи на ВК</td>
+                            <td class="TDLabel1">с</td>
+                            <td class="date_col">
+                                <input type="text" id="DateTransferFrom" class="datefield">
+                            </td>
+                            <td class="TDLabel1">по</td>
+                            <td class="date_col">
+                                <input type="text" id="DateTransferTo" class="datefield">
+                            </td>
+                            <td class="TDLabel1">с</td>
+                            <td class="date_col">
+                                <input type="text" id="DateTransferFrom2" class="datefield">
+                            </td>
+                            <td class="TDLabel1">по</td>
+                            <td class="date_col">
+                                <input type="text" id="DateTransferTo2" class="datefield">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Дата проведения ВК</td>
+                            <td class="TDLabel1">с</td>
+                            <td class="date_col">
+                                <input type="text" id="DateAcceptFrom" class="datefield">
+                            </td>
+                            <td class="TDLabel1">по</td>
+                            <td class="date_col">
+                                <input type="text" id="DateAcceptTo" class="datefield">
+                            </td>
+                            <td class="TDLabel1">с</td>
+                            <td class="date_col">
+                                <input type="text" id="DateAcceptFrom2" class="datefield">
+                            </td>
+                            <td class="TDLabel1">по</td>
+                            <td class="date_col">
+                                <input type="text" id="DateAcceptTo2" class="datefield">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Изделие</td>
+                            <td colspan="3">
+                                <input type="text" id="Item" class="datefield1">
+                            </td>
+                            <td colspan="4" rowspan="11">&nbsp;</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Наименование</td>
+                            <td colspan="3">
+                                <input type="text" id="Description" class="datefield1">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Единицы измерения</td>
+                            <td colspan="3">
+                                <select id="UMs" class="datefield1">
+
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Повторное предъявление</td>
+                            <td colspan="3">
+                                <select id="Repeated" class="datefield1">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="повторные">повторные</option>
+                                    <option value="первичные">первичные</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Тема НИОКР</td>
+                            <td colspan="3">
+                                <select id="TemaNIOKR" class="datefield1">
+
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Имя</td>
+                            <td colspan="3">
+                                <input type="text" id="Vend" class="datefield1">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Поставщик или Имя</td>
+                            <td colspan="3">
+                                <select id="VendN" class="datefield1">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Электрон">Электрон</option>
+                                    <option value="внешние">внешние</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Контролер</td>
+                            <td colspan="3">
+                                <select id="Checker" class="datefield1">
+
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Брак</td>
+                            <td colspan="3">
+                                <select id="Scrap" class="datefield1">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="с браком">с браком</option>
+                                    <option value="без брака">без брака</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Партия</td>
+                            <td colspan="3">
+                                <input type="text" id="Lot" class="datefield1">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">Показывать</td>
+                            <td colspan="3">
+                                <select id="ShowTo" class="datefield1">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Кооперация">Кооперация</option>
+                                    <option value="Закупка">Закупка</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="9">
+                                <table class="centered">
+                                    <tr>
+                                        <td colspan="3" class="tdcntr">
+                                            <h4>Показывать только поток ВК</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <input type="checkbox" id="cbShowOnlyLocQCD" class="CheckBoxFilter" value="1">ОТК
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <input type="checkbox" id="cbShowOnlyLocWork" class="CheckBoxFilter" value="1">Производство
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <hr />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3" class="tdcntr">
+                                            <h4>Показывать только ждущие обработки</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" id="cbWaitWork" class="CheckBoxFilter" value="1">Ждущие проведения ВК более 
+                                        </td>
+                                        <td>
+                                            <input type="text" id="tbWaitWork" class="TextBoxFilter" value="3" maxlength="3">
+                                            <!--<asp:rangevalidator id="vWaitWork" runat="server" controltovalidate="tbWaitWork"
+                                                minimumvalue="0" maximumvalue="999" type="Integer"
+                                                errormessage="укажите целое положительное число рабочих дней, ждущих проведение ВК изделий" display="Dynamic" setfocusonerror="true">!
+                                    </asp:rangevalidator>-->
+                                        </td>
+                                        <td>рабочих дней</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" id="cbWaitANP" class="CheckBoxFilter" value="1">Ждущие отработки задачи по АНП более
+                                        </td>
+                                        <td>
+                                            <input type="text" id="tbWaitANP" class="TextBoxFilter" value="3" maxlength="3">
+                                            <!--<asp:rangevalidator id="vWaitANP" runat="server" controltovalidate="tbWaitANP"
+                                                minimumvalue="0" maximumvalue="999" type="Integer"
+                                                errormessage="укажите целое положительное число рабочих дней, ждущих обработки АНП изделий" display="Dynamic" setfocusonerror="true">!
+                                    </asp:rangevalidator>-->
+                                        </td>
+                                        <td>рабочих дней</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <hr />
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="margin-top: 10px;">
+                            <td colspan="9" class="tdcntr">
+                                <input type="button" id="bApplyFilter" value="Применить" />
+                                &nbsp;&nbsp;&nbsp;
+                                <input type="button" id="bExportExcel" value="Экспорт в Excel" />
+                                <a style="font-size: 10px; font-family: Arial, sans-serif; vertical-align: super" href="http://int-srv/Help/HelpExcel/HelpExcel.html">Настройка экспорта</a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div id="tabs-3">
+                </div>
+                <div id="tabs-4">
+                </div>
+            </div>
+            <div>
+                <input type="hidden" id="ftUserDataLogin" />
+                <input type="hidden" id="ftUserDataUID" />
+                <input type="hidden" id="ftUserDataName" />
+                <input type="hidden" id="ftUserDatasName" />
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>
+                    Copyright &copy; 2014-<span id="ftCurrYear">2015</span> НИПК Электрон. All rights reserved. (<span id="ftUserData">0: n/a</span>)
+                </p>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

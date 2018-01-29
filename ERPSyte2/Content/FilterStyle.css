@@ -1,0 +1,56 @@
+﻿.col_6_9_head, 
+.col_1, 
+.col_2, 
+.col_3, 
+.col_4, 
+.col_5, 
+.col_6, 
+.col_7, 
+.col_8, 
+.col_9, 
+.col_1_2 {
+    display: inline;
+    font-family: Arial, "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-size: 9pt;
+    text-align: center;
+    padding: 0.25em 0.25em 0.25em 0.25em;
+    vertical-align: middle;
+    /*max-width: 200px;*/
+    text-align: left;
+}
+
+.col_6_9_head {
+    display: block;
+    font-weight: bold;
+}
+
+.col_1 {
+}
+.col_2 {
+    text-align: right;
+}
+.col_3 {
+    width: 200px;
+}
+.col_4 {
+    text-align: right;
+}
+.col_5 {
+    width: auto;
+}
+.col_6 {
+    text-align: right;
+}
+.col_7 {
+    width: auto;
+}
+.col_8 {
+    text-align: right;
+}
+.col_9 {
+    display: block;
+    width: auto;
+}
+
+.col_1_2 {
+}
