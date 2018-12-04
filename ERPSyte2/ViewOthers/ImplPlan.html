@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>План по реализации общий</title>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="../Image/favicon.ico" type="image/x-icon" />
+  <link href="../Content/themes/base/jquery-ui.css" rel="stylesheet" />
+  <link href="../Content/DataGrid.css" rel="stylesheet" />
+  <link href="../Content/Site.css" rel="stylesheet" />
+  <link href="../Content/ImplPlan.css" rel="stylesheet" />
+  <script src="../Scripts/jquery-1.6.4.min.js"></script>
+  <script src="../Scripts/jquery-ui-1.10.4.min.js"></script>
+  <script src="../Scripts/jquery.blockUI.min.js"></script>
+  <script src="../Scripts/DatePickerReady.js"></script>
+  <script src="../Scripts/json2.js"></script>
+
+  <script src="../Scripts/zKdHandleAjaxError.js"></script>
+  <script src="../Scripts/zKdUserDataUnit.js"></script>
+  <script src="../Scripts/zKdDateFormatUnit.js"></script>
+  <script src="../Scripts/zKdPageFooterUnit.js"></script>
+  <script src="../Scripts/zKdImplPlanUnit.js"></script>
+</head>
+<body>
+  <form id="MainForm">
+    <div id="body">
+      <div id="tabs" style="width: auto; margin-left: 0px;">
+        <h3 style="text-align: center; margin-bottom: 10px;">План по реализации (по отгруженному, доставленному и смонтированному оборудованию)
+        </h3>
+        <ul>
+          <li><a href="#tabs-1">Данные</a></li>
+          <li><a href="#tabs-2">Фильтр</a></li>
+        </ul>
+        <div id="tabs-1">
+          <table id="GridViewData">
+            <thead class="hdhead">
+              <tr class="hdrow">
+                <th rowspan="2" class="hdcol">Тип изделия</th>
+                <th rowspan="2" class="hdcol">Наименование</th>
+                <th rowspan="2" class="hdcol">Код изделия</th>
+                <th rowspan="2" class="hdcol">Основание (заказ)</th>
+                <th rowspan="2" class="hdcol">ЗНП</th>
+                <th rowspan="2" class="hdcol">СерНомер План</th>
+
+                <th colspan="6" class="td_commers">Коммерческий департамент</th>
+                <th colspan="7" class="td_supply">Снабжение</th>
+                <th colspan="3" class="td_defAPS">Дефицит по ГП из АПС отчета</th>
+                <th colspan="4" class="td_work">Производство, склад</th>
+                <th colspan="5" class="td_trans">Транспортный отдел</th>
+                <th colspan="4" class="td_service">Служба сервиса</th>
+
+                <th rowspan="2" class="hdcol">Номер проекта</th>
+                <th rowspan="2" class="hdcol">Стоимость монтажа</th>
+                <th rowspan="2" class="hdcol">Примечание</th>
+
+                <th rowspan="2" class="hdcol">Статус</th>
+                <th rowspan="2" class="hdcol">ID</th>
+                <th rowspan="2" class="hdcol">Дата создания</th>
+
+                <th colspan="13" class="td_sl">Заказ клиента</th>
+                <!--colspan=13 Заказ клиента-->
+              </tr>
+              <tr class="hdrow">
+                <!--colspan=6 Коммерческий департамент-->
+                <th class="td_commers">Срок по договору</th>
+                <th class="td_commers">Срок по ГК</th>
+                <th class="td_commers">Желаемый срок исполнения заказа</th>
+                <th class="td_commers">срок по проекту в ОКО</th>
+                <th class="td_commers">ВрХранение</th>
+                <th class="td_commers">Примечание коммерч</th>
+
+                <!--colspan=7 Снабжение-->
+                <th class="td_supply">Очередность для импорта</th>
+                <th class="td_supply">Очередность для закупок локально</th>
+                <th class="td_supply">Импорт</th>
+                <th class="td_supply">Отечественные1</th>
+                <th class="td_supply">Отечественные2</th>
+                <th class="td_supply">Отечественные3</th>
+                <th class="td_supply">Отечественные4</th>
+
+                <!--colspan=3 Дефицит по ГП из АПС отчета-->
+                <th class="td_defAPS">Строк в потребности</th>
+                <th class="td_defAPS">Общая стоимость</th>
+                <th class="td_defAPS">Показать в Excel</th>
+
+                <!--colspan=4 Производство, склад-->
+                <th class="td_work">Сдача на склад План</th>
+                <th class="td_work">Сдача на склад Факт</th>
+                <th class="td_work">Примечание</th>
+                <th class="td_work">Дата отгрузки План</th>
+
+                <!--colspan=5 Транспортный отдел-->
+                <th class="td_trans">Дата отгрузки Факт</th>
+                <th class="td_trans">Тип отгрузки</th>
+                <th class="td_trans">Время в пути</th>
+                <th class="td_trans">Доставка до заказчика План</th>
+                <th class="td_trans">Доставка до заказчика Факт</th>
+
+                <!--colspan=4 Служба сервиса-->
+                <th class="td_service">Готовность кабинета</th>
+                <th class="td_service">Начало монтажа</th>
+                <th class="td_service">Окончание монтажа</th>
+                <th class="td_service">Примечание от СС</th>
+
+                <!--colspan=13 Заказ клиента-->
+                <th class="td_sl">ЗК</th>
+                <th class="td_sl">Строка ЗК</th>
+                <th class="td_sl">Изделие в ЗК</th>
+                <th class="td_sl">Наименование в ЗК</th>
+                <th class="td_sl">Заказано</th>
+                <th class="td_sl">Отгружено</th>
+                <th class="td_sl">Е/И</th>
+                <th class="td_sl">Заказчик</th>
+                <th class="td_sl">Получатель</th>
+                <th class="td_sl">Стоимость изделия</th>
+                <th class="td_sl">План.дата</th>
+                <th class="td_sl">Дата отгрузки в 1С</th>
+                <th class="td_sl">Создание ФСИ</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div id="tabs-2">
+          <table style="background-color: ButtonFace;">
+            <!--<tr>
+                            <td>Код ERP</td>
+                            <td colspan="4">
+                                <input type="text" id="Item" style="width: 100%;">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Название</td>
+                            <td colspan="4">
+                                <input type="text" id="Description" style="width: 100%;">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Дата присвоения группы 004</td>
+                            <td>с</td>
+                            <td>
+                                <input type="text" id="DateCode004From" class="datefield">
+                            </td>
+                            <td>по</td>
+                            <td>
+                                <input type="text" id="DateCode004To" class="datefield">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Процесс «Регистрация аналога» запущен</td>
+                            <td colspan="4">
+                                <select id="IsAnalogRegistered" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Аналог утвержден</td>
+                            <td colspan="4">
+                                <select id="IsAnalogApproved" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Введение эквивалентных замен</td>
+                            <td colspan="4">
+                                <select id="IsEquivalentPush" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>ИИ проведены</td>
+                            <td colspan="4">
+                                <select id="IsVersionAdvance" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Применяемость закрыта</td>
+                            <td colspan="4">
+                                <select id="IsApplyClosed" style="width: 100%;">
+                                    <option selected="selected" value="все">все</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Срок опережения 999</td>
+                            <td colspan="4">
+                                <select id="IsLeadTime999" style="width: 100%;">
+                                    <option value="все">все</option>
+                                    <option selected="selected" value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                            </td>
+                        </tr>-->
+
+
+            <tr>
+              <td colspan="5" class="tdcntr" style="padding-top: 20px; padding-bottom: 30px;">
+                <input type="button" id="bApplyFilter" value="Применить" />
+              </td>
+            </tr>
+
+            <!--<tr style="border-style: solid; border-width: 1px; border-color: #666666;">
+                            <td colspan="5" class="tdcntr" style="padding-top: 5px; padding-bottom: 10px; background-color: #FFFFDB;">
+                                <h3 style="color: #666666;">Совет:</h3>
+                                <strong style="color: #666666">
+                                    Применяйте * для нечеткого поиска по обозначению и/или наименованию.
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">&nbsp;</td>
+                        </tr>
+                        <tr style="border-style: solid; border-width: 1px; border-color: #666666;">
+                            <td colspan="5" class="tdcntr" style="padding-top: 5px; padding-bottom: 10px; background-color: #FFFFDB;">
+                                <h3 style="color: #FF6666;">Внимание!</h3>
+                                <strong style="color: #666666">
+                                    В связи с большим временем обработки запроса,
+                                    <br />
+                                    всегда старайтесь максимально ограничить получаемую выборку,
+                                    <br />
+                                    применяя все возможные доступные фильтры.
+                                </strong>
+                            </td>
+                        </tr>-->
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="content-wrapper">
+      <div class="float-left">
+        <p>
+          Copyright &copy; 2014-<span id="ftCurrYear">2015</span> НИПК Электрон. All rights reserved. (<span id="ftUserData">0: n/a</span>)
+        </p>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

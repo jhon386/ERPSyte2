@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>План по реализации</title>
+	<meta charset="utf-8" />
+    <link rel="shortcut icon" href="../Image/favicon.ico" type="image/x-icon" />
+    <link href="../Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="../Content/DataGrid.css" rel="stylesheet" />
+    <link href="../Content/Site.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.6.4.min.js"></script>
+    <script src="../Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="../Scripts/jquery.blockUI.min.js"></script>
+    <script src="../Scripts/DatePickerReady.js"></script>
+    <script src="../Scripts/json2.js"></script>
+    <script src="../Scripts/zKdDateFormatUnit.js"></script>
+    <script src="../Scripts/zKdPageFooterUnit.js"></script>
+    <script src="../Scripts/zKdImplPlanItemUnit.js"></script>
+    <style>
+        input, textarea{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <form id="MainForm">
+        <div id="body">
+            <h3 style="text-align:center; margin-bottom:10px;">ImplPlanItem</h3>
+            <div>
+                <table id="GridViewData" style="width: 100%;">
+                    <tr class="hdrow">
+                        <td class="hdcol130">Основание (заказ)<br />
+                            OrderFromManager	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_OrderFromManager" value="" />
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">номера изделий, план<br />
+                            ser_num	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_ser_num" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">КД<br />
+                            ItemManager	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_ItemManager" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">Наименование изделия<br />
+                            Comment1	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_Comment1" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">примечание<br />
+                            Comment2	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_Comment2" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">примечание<br />
+                            Comment3	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_Comment3" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">готовность кабинета<br />
+                            DateKabinetReady	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_DateKabinetReady" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">окончание монтажа<br />
+                            DateMontagEnd	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_DateMontagEnd" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            Stat	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_Stat" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            ID	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_ID" value="" />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            ItemSL	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_ItemSL" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            descr	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_descr" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            u_m	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_u_m" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            qty_ordered	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_qty_ordered" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            qty_shipped	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_qty_shipped" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            Job	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_Job" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            Suffix	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_Suffix" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            cust	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_cust" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            customer_ship	
+                        </td>
+                        <td class="itcol">
+                            <textarea id="cmp_customer_ship" readonly >
+                            </textarea>	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            due_date	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_due_date" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            date_fact_whse	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_date_fact_whse" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            co_num	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_co_num" value="" readonly />	
+                        </td>
+                    </tr>
+                    <tr class="hdrow">
+                        <td class="hdcol130">___<br />
+                            co_line	
+                        </td>
+                        <td class="itcol">
+                            <input type="text" id="cmp_co_line" value="" readonly />	
+                        </td>
+                    </tr>
+                </table>
+            </div>
+<!--            <div>
+                <input type="hidden" id="SN" value="" />
+                <input type="hidden" id="ID" value="" />
+            </div>-->
+            <div>
+                <input type="hidden" id="ftUserDataLogin" />
+                <input type="hidden" id="ftUserDataUID" />
+                <input type="hidden" id="ftUserDataName" />
+                <input type="hidden" id="ftUserDatasName" />
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>
+                    Copyright &copy; 2014-<span id="ftCurrYear">2015</span> НИПК Электрон. All rights reserved. (<span id="ftUserData">0: n/a</span>)
+                </p>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -49,7 +49,7 @@
                             backgroundColor: '#000',
                             opacity: 0.6
                         },
-                        message: '<img src=../Image/busy.gif style="vertical-align:middle;">  <b style="vertical-align:middle; font-size:larger;">Подождите, идет&nbsp;запрос&nbsp;данных.</b>'
+                        message: '<img src=../Image/busy.gif style="vertical-align:middle;">  <b style="vertical-align:middle; font-size:larger;">Подождите, идет&nbsp;загрузка&nbsp;данных.</b>'
                     });
                 },
                 //complete: function () { $.unblockUI(); },
@@ -58,7 +58,7 @@
             });
 
             if (event)
-                event.preventDefault ? event.preventDefault() : (event.returnValue = false); //убрать реакцию браузера на событие W3C / IE 
+                event.preventDefault ? event.preventDefault() : event.returnValue = false; //убрать реакцию браузера на событие W3C / IE 
             return false;
         } catch (e) {
             alert(' Произошла ошибка: ' + e.name + ' ' + e.message);
@@ -98,8 +98,8 @@
             var filterData = [];
             filterData[0] = cItem.value;
             filterData[1] = cDescription.value;
-            filterData[2] = (cDateCode004From.value == "") ? "" : cDateCode004From.value.split('.').reverse().join('');
-            filterData[3] = (cDateCode004To.value == "") ? "" : cDateCode004To.value.split('.').reverse().join('');
+            filterData[2] = cDateCode004From.value === "" ? "" : cDateCode004From.value.split('.').reverse().join('');
+            filterData[3] = cDateCode004To.value === "" ? "" : cDateCode004To.value.split('.').reverse().join('');
             filterData[4] = cIsAnalogRegistered.options[cIsAnalogRegistered.selectedIndex].value;
             filterData[5] = cIsAnalogApproved.options[cIsAnalogApproved.selectedIndex].value;
             filterData[6] = cIsEquivalentPush.options[cIsEquivalentPush.selectedIndex].value;
@@ -133,16 +133,16 @@
                             backgroundColor: '#000',
                             opacity: 0.6
                         },
-                        message: '<img src=../Image/busy.gif style="vertical-align:middle;">  <b style="vertical-align:middle; font-size:larger;">Подождите, идет&nbsp;запрос&nbsp;данных.</b>'
+                        message: '<img src=../Image/busy.gif style="vertical-align:middle;">  <b style="vertical-align:middle; font-size:larger;">Подождите, идет&nbsp;загрузка&nbsp;данных.</b>'
                     });
                 },
                 complete: function () { $.unblockUI(); },
-                success: returnFilterData,
+                success: returnData,
                 error: returnError
             });
 
             if (event)
-                event.preventDefault ? event.preventDefault() : (event.returnValue = false); //убрать реакцию браузера на событие W3C / IE 
+                event.preventDefault ? event.preventDefault() : event.returnValue = false; //убрать реакцию браузера на событие W3C / IE 
             return false;
         } catch (e) {
             alert(' Произошла ошибка: ' + e.name + ' ' + e.message);
@@ -153,7 +153,7 @@
         $("[id*=GridViewData] tr").not($("[id*=GridViewData] tr.hdrow")).remove();
     }
 
-    function returnFilterData(data) {
+    function returnData(data) {
         try {
             removeDataRow();
 
@@ -184,27 +184,27 @@
                             vItem = vField;
                         } else if (kField === "Description") {
                             vDescription = vField;
-                        } else if (kField === "DateCode004" && vField !== null && vField != "") {
+                        } else if (kField === "DateCode004" && vField !== null && vField !== "") {
                             vDateCode004 = zKdDateFormat(new Date(parseInt(vField.substr(6))));
                         } else if (kField === "IsAnalogRegistered") {
-                            vIsAnalogRegistered = (vField === 1) ? "Да" : "&nbsp;";
+                            vIsAnalogRegistered = vField === 1 ? "Да" : "&nbsp;";
                         } else if (kField === "IsAnalogApproved") {
-                            vIsAnalogApproved = (vField === 1) ? "Да" : "&nbsp;";
+                            vIsAnalogApproved = vField === 1 ? "Да" : "&nbsp;";
                         } else if (kField === "IsEquivalentPush") {
                             vIsEquivalentPush = vField;
                         } else if (kField === "IsVersionAdvance") {
                             vIsVersionAdvance = vField;
                         } else if (kField === "IsApplyClosed") {
-                            vIsApplyClosed = (vField === 1) ? "Да" : "&nbsp;";
+                            vIsApplyClosed = vField === 1 ? "Да" : "&nbsp;";
                         } else if (kField === "IsLeadTime999") {
-                            vIsLeadTime999 = (vField === 1) ? "Да" : "&nbsp;";
+                            vIsLeadTime999 = vField === 1 ? "Да" : "&nbsp;";
                         } else if (kField === "AccessRight") {
                             vAccessRight = vField;
                         }
                     });
 
-                    vEquivalentPush_Grant = (vAccessRight & 32) == 32; //ProcessNotBuy. Начальник КБ (или лицо его заменяющее). dbo.zKd_UserRight
-                    vVersionAdvance_Grant = (vAccessRight & 32) == 32; //ProcessNotBuy. Начальник КБ (или лицо его заменяющее). dbo.zKd_UserRight
+                    vEquivalentPush_Grant = (vAccessRight & 32) === 32; //ProcessNotBuy. Начальник КБ (или лицо его заменяющее). dbo.zKd_UserRight
+                    vVersionAdvance_Grant = (vAccessRight & 32) === 32; //ProcessNotBuy. Начальник КБ (или лицо его заменяющее). dbo.zKd_UserRight
 
                     vString += "<td class=itcolnw>" + vItem + "</td>";
                     vString += "<td class=itcol>" + vDescription + "</td>";
@@ -253,7 +253,7 @@
             var responseText, errDate = new Date(), errType, errCode, errMessage,
                 errSource = "", errParameters = "", errHelpLink = "", textError = "Ошибка\n\n";
 
-            if (jqXHR != null && jqXHR.responseText != "") {
+            if (jqXHR !== null && jqXHR.responseText !== "") {
                 try {
                     responseText = JSON.parse(jqXHR.responseText);
                     errDate = new Date(parseInt(responseText.Date.substr(6)));

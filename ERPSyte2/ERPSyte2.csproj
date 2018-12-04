@@ -73,6 +73,7 @@
     <Content Include="AccessDenied.aspx" />
     <Content Include="Content\DataGrid.css" />
     <Content Include="Content\FilterStyle.css" />
+    <Content Include="Content\ImplPlan.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -150,10 +151,16 @@
     <Content Include="Scripts\docready.js" />
     <Content Include="Scripts\QCDjournalUnit.js" />
     <Content Include="Scripts\zKdDateFormatUnit.js" />
+    <Content Include="Scripts\zKdHandleAjaxError.js" />
+    <Content Include="Scripts\zKdImplPlanItemUnit.js" />
+    <Content Include="Scripts\zKdImplPlanUnit.js" />
     <Content Include="Scripts\zKdPageFooterUnit.js" />
     <Content Include="Scripts\zKdProcNotBuyUnit.js" />
+    <Content Include="Scripts\zKdUserDataUnit.js" />
     <Content Include="TestPages\HTML5CanvasGoogleBouncingBalls.html" />
     <Content Include="TestPages\TestPage1.html" />
+    <Content Include="ViewOthers\ImplPlan.html" />
+    <Content Include="ViewOthers\ImplPlanItem.html" />
     <Content Include="ViewOthers\ProcessNotBuy.aspx" />
     <Content Include="ViewOthers\ProcNotBuy.aspx" />
     <Content Include="ViewOthers\ProcNotBuyItems.html" />

@@ -2,7 +2,7 @@
     background-color: Window;
 }
 
-.hdcol{
+.hdcol, .hdcol130{
     background-color: ButtonFace;
     border-color: #000;
     border-style: solid;    
@@ -13,6 +13,14 @@
     padding: 0.25em 0.25em 0.25em 0.25em;
     vertical-align: middle;
     max-width: 100px;
+}
+
+.hdcol130 {
+    max-width: 130px;
+}
+
+.input{
+    width: 300px;
 }
 
 .itcol, .itcolct, .itcolrt, .itcolnw, .itcol300{
@@ -100,7 +108,7 @@ tr:nth-of-type(odd) {
     margin: 0 auto;
 }
 
-.aButton0, .aButton1{
+.aButton0, .aButton1, .aImplPlanCreate, .aImplPlanUpdate {
     text-align: center; 
     font-family: Verdana,Arial,sans-serif;
     font-size: 1em;
@@ -112,19 +120,22 @@ tr:nth-of-type(odd) {
     margin: 6px;
     border: 1px solid #787878;
 }
+    .aImplPlanCreate, .aImplPlanUpdate {
+        width: 100%;
+    }
 
-    .aButton0{
+    .aButton0, .aImplPlanCreate{
         background-color: #ff6666;
     }
 
-        .aButton0:hover{
+        .aButton0, .aImplPlanCreate:hover{
             background-color: #ffcccc;
         }
 
-    .aButton1{
+    .aButton1, .aImplPlanUpdate{
         background-color: #66ff66;
     }
 
-        .aButton1:hover{
+        .aButton1, .aImplPlanUpdate:hover{
             background-color: #ccffcc;
         }

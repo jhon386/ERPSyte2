@@ -1,0 +1,52 @@
+﻿body {
+  background-color: #eeeeee;
+}
+
+th, td {
+  text-align: center;
+  border: 1px solid black;
+  vertical-align: middle;
+  font-family: Arial, "Segoe UI", Verdana, Helvetica, Sans-Serif;
+  font-size: 9pt;
+  padding: 0.25em 0.25em 0.25em 0.25em;
+}
+
+.td_nw {
+  white-space: nowrap;
+}
+
+.td_ro {
+  background-color: ButtonFace;
+}
+
+thead tr td {
+  background-color: #efefef;
+}
+
+.td_commers {
+  background-color: #c5bd98;
+}
+
+.td_supply {
+  background-color: #b7dde8;
+}
+
+.td_work {
+  background-color: #c3d79a;
+}
+
+.td_trans {
+  background-color: #d8e4bc;
+}
+
+.td_service {
+  background-color: #f9bf8f;
+}
+
+.td_sl {
+  background-color: #ffccff;
+}
+
+.td_defAPS {
+  background-color: #ffffcc;
+}

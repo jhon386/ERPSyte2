@@ -12,6 +12,12 @@
         <a href="ViewOthers/ProcNotBuyItems.html">ProcNotBuyItems</a>
         <br />
         <br />
+        <a href="ViewOthers/ImplPlan.html">ImplPlan</a>
+        <br />
+        <br />
+        <a href="ViewOthers/ImplPlan.asp">ImplPlan.asp</a>
+        <br />
+        <br />
         <hr />
         <asp:HyperLink ID="hlQCDViewer" runat="server" NavigateUrl="~/ViewOthers/QCDViewer.aspx">Журнал входного контроля</asp:HyperLink>
         <br />
